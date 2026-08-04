@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consulta & Venda | Clínica Veterinária</title>
+    <title>Consulta & Vendas | Clínica Veterinária VetCare</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -21,63 +21,97 @@
             --shadow: 0 10px 30px rgba(13, 148, 136, 0.12);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Poppins', system-ui, sans-serif;
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
-            min-height: 100vh;
         }
 
-        /* Header */
-        header {
-            background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
-            color: white;
-            padding: 2.5rem 1.5rem 3.5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+        /* Navbar */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        header::before {
-            content: "🐾";
-            position: absolute;
-            font-size: 9rem;
-            opacity: 0.07;
-            right: 8%;
-            top: -25px;
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0.9rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        header h1 {
-            font-size: 2rem;
+        .logo {
+            font-size: 1.4rem;
             font-weight: 700;
-            margin-bottom: 0.4rem;
+            color: var(--primary);
+            text-decoration: none;
         }
 
-        header p {
-            opacity: 0.95;
-            font-size: 1.1rem;
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            list-style: none;
         }
 
-        /* Navegação de abas */
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active { color: var(--primary); }
+
+        .btn-nav {
+            background: var(--primary);
+            color: white !important;
+            padding: 0.55rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #0d9488, #0f766e);
+            color: white;
+            padding: 3.2rem 1.5rem;
+            text-align: center;
+        }
+
+        .hero h1 { font-size: 2.1rem; margin-bottom: 0.4rem; }
+        .hero p { opacity: 0.95; font-size: 1.1rem; }
+
+        /* Abas */
         .tabs {
             display: flex;
             justify-content: center;
             gap: 0.8rem;
-            margin: -1.8rem auto 2rem;
             max-width: 500px;
+            margin: -1.6rem auto 2rem;
             padding: 0 1.2rem;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 0.9rem 1.2rem;
+            padding: 0.9rem;
             border: none;
             border-radius: 12px;
             background: white;
@@ -95,9 +129,7 @@
             transform: translateY(-3px);
         }
 
-        .tab-btn:hover:not(.active) {
-            background: var(--primary-light);
-        }
+        .tab-btn:hover:not(.active) { background: var(--primary-light); }
 
         /* Container */
         .container {
@@ -125,25 +157,18 @@
         }
 
         .section-title {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: var(--primary);
-            margin: 1.6rem 0 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            border-bottom: 2px solid var(--primary-light);
+            margin: 1.5rem 0 1rem;
             padding-bottom: 0.4rem;
+            border-bottom: 2px solid var(--primary-light);
         }
 
-        .section-title:first-child {
-            margin-top: 0;
-        }
+        .section-title:first-child { margin-top: 0; }
 
-        /* Formulário */
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
+        /* Form */
+        .form-group { margin-bottom: 1.25rem; }
 
         label {
             display: block;
@@ -168,10 +193,7 @@
             box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.15);
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 85px;
-        }
+        textarea { resize: vertical; min-height: 85px; }
 
         .row {
             display: grid;
@@ -194,4 +216,518 @@
             cursor: pointer;
             font-size: 0.9rem;
             font-weight: 500;
-            transition: all 0.15s
+            transition: all 0.15s;
+        }
+
+        .horario-btn:hover { border-color: var(--primary); background: var(--primary-light); }
+        .horario-btn.selected {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 0.95rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(13, 148, 136, 0.3);
+        }
+
+        /* Produtos */
+        .produtos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 1.4rem;
+            margin-top: 1rem;
+        }
+
+        .produto-card {
+            background: #fff;
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: all 0.25s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .produto-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(13, 148, 136, 0.15);
+            border-color: var(--primary);
+        }
+
+        .produto-img {
+            height: 130px;
+            background: linear-gradient(135deg, #ccfbf1, #99f6e4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .produto-info {
+            padding: 1.1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .produto-info h3 { font-size: 1.02rem; margin-bottom: 0.3rem; }
+        .produto-info p { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.8rem; flex: 1; }
+
+        .produto-preco {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .btn-comprar {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-comprar:hover { background: var(--primary-dark); }
+
+        /* Carrinho */
+        .carrinho-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: var(--primary);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 6px 20px rgba(13, 148, 136, 0.4);
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.2s;
+        }
+
+        .carrinho-float:hover { transform: scale(1.08); }
+
+        .carrinho-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent);
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Sucesso */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 2.5rem 1rem;
+        }
+
+        .success-message.show { display: block; }
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+            background: #d1fae5;
+            color: #059669;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.1rem;
+            margin: 0 auto 1.2rem;
+        }
+
+        .success-message h2 { color: #059669; margin-bottom: 0.5rem; }
+        .success-message p { color: var(--muted); margin-bottom: 1.5rem; }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* Footer */
+        footer {
+            background: #134e4a;
+            color: white;
+            padding: 2.5rem 1.5rem 1.5rem;
+            text-align: center;
+        }
+
+        footer a { color: rgba(255,255,255,0.85); text-decoration: none; }
+        footer a:hover { color: white; }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        /* Responsivo */
+        @media (max-width: 600px) {
+            .row { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 1.7rem; }
+            .tabs { flex-direction: column; }
+            .produtos-grid { grid-template-columns: 1fr 1fr; }
+            .nav-links { display: none; }
+            .menu-toggle { display: block; }
+            .nav-links.show {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1.5rem;
+                gap: 1rem;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🐾 VetCare</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="servicos.html">Serviços</a></li>
+                <li><a href="agendamentos.html">Agendamentos</a></li>
+                <li><a href="produtos.html">Produtos</a></li>
+                <li><a href="consultavendas.html" class="active">Consulta & Vendas</a></li>
+                <li><a href="agendamentos.html" class="btn-nav">Agendar</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>🐾 Consulta & Vendas</h1>
+        <p>Agende o atendimento do seu pet ou compre produtos com qualidade veterinária</p>
+    </section>
+
+    <!-- Abas -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="mostrarAba('consulta')">📅 Consulta</button>
+        <button class="tab-btn" onclick="mostrarAba('vendas')">🛒 Vendas</button>
+    </div>
+
+    <div class="container">
+
+        <!-- ABA CONSULTA -->
+        <div class="card active" id="aba-consulta">
+            <form id="formConsulta">
+                <div class="section-title">👤 Dados do Tutor</div>
+
+                <div class="form-group">
+                    <label for="nome">Nome completo *</label>
+                    <input type="text" id="nome" required placeholder="Seu nome">
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="email">E-mail *</label>
+                        <input type="email" id="email" required placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone">WhatsApp *</label>
+                        <input type="tel" id="telefone" required placeholder="(11) 99999-9999">
+                    </div>
+                </div>
+
+                <div class="section-title">🐶 Dados do Pet</div>
+
+                <div class="form-group">
+                    <label for="nomePet">Nome do pet *</label>
+                    <input type="text" id="nomePet" required placeholder="Ex: Thor, Luna...">
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="especie">Espécie *</label>
+                        <select id="especie" required>
+                            <option value="" disabled selected>Selecione</option>
+                            <option value="cao">Cão</option>
+                            <option value="gato">Gato</option>
+                            <option value="ave">Ave</option>
+                            <option value="roedor">Roedor</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="raca">Raça</label>
+                        <input type="text" id="raca" placeholder="Ex: Labrador, SRD">
+                    </div>
+                </div>
+
+                <div class="section-title">📅 Serviço e Horário</div>
+
+                <div class="form-group">
+                    <label for="servico">Tipo de atendimento *</label>
+                    <select id="servico" required>
+                        <option value="" disabled selected>Selecione</option>
+                        <option value="consulta">Consulta de rotina</option>
+                        <option value="vacina">Vacinação</option>
+                        <option value="retorno">Retorno</option>
+                        <option value="castracao">Castração</option>
+                        <option value="exame">Exames</option>
+                        <option value="emergencia">Urgência</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="data">Data preferida *</label>
+                    <input type="date" id="data" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Horário preferido *</label>
+                    <div class="horarios" id="listaHorarios">
+                        <button type="button" class="horario-btn" data-hora="08:30">08:30</button>
+                        <button type="button" class="horario-btn" data-hora="09:30">09:30</button>
+                        <button type="button" class="horario-btn" data-hora="10:30">10:30</button>
+                        <button type="button" class="horario-btn" data-hora="11:30">11:30</button>
+                        <button type="button" class="horario-btn" data-hora="14:00">14:00</button>
+                        <button type="button" class="horario-btn" data-hora="15:00">15:00</button>
+                        <button type="button" class="horario-btn" data-hora="16:00">16:00</button>
+                        <button type="button" class="horario-btn" data-hora="17:00">17:00</button>
+                    </div>
+                    <input type="hidden" id="horario" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="observacoes">Observações</label>
+                    <textarea id="observacoes" placeholder="Motivo da consulta ou informações importantes..."></textarea>
+                </div>
+
+                <button type="submit" class="btn">Confirmar Agendamento</button>
+            </form>
+
+            <div class="success-message" id="sucessoConsulta">
+                <div class="success-icon">✓</div>
+                <h2>Agendamento enviado!</h2>
+                <p>Recebemos sua solicitação. Entraremos em contato em breve para confirmar.</p>
+                <button type="button" class="btn btn-secondary" onclick="novoAgendamento()">Fazer novo agendamento</button>
+            </div>
+        </div>
+
+        <!-- ABA VENDAS -->
+        <div class="card" id="aba-vendas">
+            <div class="section-title">🛒 Produtos Disponíveis</div>
+            <p style="color: var(--muted); margin-bottom: 1.2rem;">Produtos selecionados com indicação veterinária.</p>
+
+            <div class="produtos-grid">
+                <div class="produto-card">
+                    <div class="produto-img">🦴</div>
+                    <div class="produto-info">
+                        <h3>Ração Premium Cães</h3>
+                        <p>Alimento completo. 15kg</p>
+                        <div class="produto-preco">R$ 189,90</div>
+                        <button class="btn-comprar" onclick="adicionarCarrinho('Ração Premium Cães', 189.90)">Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="produto-card">
+                    <div class="produto-img">🐱</div>
+                    <div class="produto-info">
+                        <h3>Ração Premium Gatos</h3>
+                        <p>Fórmula balanceada. 10kg</p>
+                        <div class="produto-preco">R$ 159,90</div>
+                        <button class="btn-comprar" onclick="adicionarCarrinho('Ração Premium Gatos', 159.90)">Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="produto-card">
+                    <div class="produto-img">💉</div>
+                    <div class="produto-info">
+                        <h3>Vermífugo Canino</h3>
+                        <p>Para cães 10-20kg</p>
+                        <div class="produto-preco">R$ 42,00</div>
+                        <button class="btn-comprar" onclick="adicionarCarrinho('Vermífugo Canino', 42.00)">Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="produto-card">
+                    <div class="produto-img">🧴</div>
+                    <div class="produto-info">
+                        <h3>Shampoo Antipulgas</h3>
+                        <p>500ml - Cães e gatos</p>
+                        <div class="produto-preco">R$ 38,90</div>
+                        <button class="btn-comprar" onclick="adicionarCarrinho('Shampoo Antipulgas', 38.90)">Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="produto-card">
+                    <div class="produto-img">💊</div>
+                    <div class="produto-info">
+                        <h3>Suplemento Articular</h3>
+                        <p>Para cães idosos</p>
+                        <div class="produto-preco">R$ 79,90</div>
+                        <button class="btn-comprar" onclick="adicionarCarrinho('Suplemento Articular', 79.90)">Adicionar</button>
+                    </div>
+                </div>
+
+                <div class="produto-card">
+                    <div class="produto-img">🎾</div>
+                    <div class="produto-info">
+                        <h3>Brinquedo Interativo</h3>
+                        <p>Bola com apito</p>
+                        <div class="produto-preco">R$ 29,90</div>
+                        <button class="btn-comprar" onclick="adicionarCarrinho('Brinquedo Interativo', 29.90)">Adicionar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carrinho flutuante -->
+    <div class="carrinho-float" onclick="verCarrinho()" title="Ver carrinho">
+        🛒
+        <span class="carrinho-count" id="carrinhoCount">0</span>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p><strong>🐾 VetCare</strong> — Clínica Veterinária</p>
+        <div class="footer-links">
+            <a href="index.html">Início</a>
+            <a href="servicos.html">Serviços</a>
+            <a href="agendamentos.html">Agendamentos</a>
+            <a href="produtos.html">Produtos</a>
+            <a href="https://wa.me/5511999999999">WhatsApp</a>
+        </div>
+        <p style="margin-top: 1rem; opacity: 0.8; font-size: 0.9rem;">© 2026 VetCare — Todos os direitos reservados</p>
+    </footer>
+
+    <script>
+        // Menu mobile
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('show');
+        }
+
+        // Abas
+        function mostrarAba(aba) {
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('aba-' + aba).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Data mínima
+        const dataInput = document.getElementById('data');
+        if (dataInput) dataInput.min = new Date().toISOString().split('T')[0];
+
+        // Horários
+        const horarios = document.querySelectorAll('.horario-btn');
+        const horarioInput = document.getElementById('horario');
+
+        horarios.forEach(btn => {
+            btn.addEventListener('click', () => {
+                horarios.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                horarioInput.value = btn.dataset.hora;
+            });
+        });
+
+        // Formulário
+        const form = document.getElementById('formConsulta');
+        const sucesso = document.getElementById('sucessoConsulta');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!horarioInput.value) {
+                alert('Por favor, selecione um horário.');
+                return;
+            }
+            form.style.display = 'none';
+            sucesso.classList.add('show');
+        });
+
+        function novoAgendamento() {
+            form.reset();
+            horarios.forEach(b => b.classList.remove('selected'));
+            horarioInput.value = '';
+            form.style.display = 'block';
+            sucesso.classList.remove('show');
+        }
+
+        // Carrinho
+        let carrinho = [];
+        const contador = document.getElementById('carrinhoCount');
+
+        function adicionarCarrinho(nome, preco) {
+            carrinho.push({ nome, preco });
+            contador.textContent = carrinho.length;
+            alert(`✅ ${nome} adicionado ao carrinho!`);
+        }
+
+        function verCarrinho() {
+            if (carrinho.length === 0) {
+                alert('Seu carrinho está vazio.');
+                return;
+            }
+
+            let mensagem = '🛒 *Pedido - VetCare*\n\n';
+            let total = 0;
+
+            carrinho.forEach((item, i) => {
+                mensagem += `${i + 1}. ${item.nome} - R$ ${item.preco.toFixed(2)}\n`;
+                total += item.preco;
+            });
+
+            mensagem += `\n*Total: R$ ${total.toFixed(2)}*`;
+            mensagem += `\n\nDeseja finalizar o pedido?`;
+
+            if (confirm(mensagem)) {
+                const texto = encodeURIComponent(mensagem);
+                // Substitua pelo número real da clínica
+                window.open(`https://wa.me/5511999999999?text=${texto}`, '_blank');
+            }
+        }
+    </script>
+</body>
+</html>
