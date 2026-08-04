@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho | Clínica Veterinária VetCare</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0d9488;
+            --primary-dark: #0f766e;
+            --primary-light: #ccfbf1;
+            --accent: #f59e0b;
+            --bg: #f0fdfa;
+            --card: #ffffff;
+            --text: #134e4a;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 16px;
+            --shadow: 0 10px 30px rgba(13, 148, 136, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ========== NAVBAR ========== */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.06);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0.9rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.8rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .btn-nav {
+            background: var(--primary);
+            color: white !important;
+            padding: 0.55rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .btn-nav:hover {
+            background: var(--primary-dark);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+            color: white;
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.1rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        .hero p {
+            opacity: 0.95;
+            font-size: 1.1rem;
+        }
+
+        /* ========== CONTEÚDO ========== */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2.5rem 1.5rem 4rem;
+        }
+
+        .carrinho-vazio {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .carrinho-vazio .icone {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .carrinho-vazio h2 {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .carrinho-vazio p {
+            color: var(--muted);
+            margin-bottom: 1.8rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.85rem 1.8rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-light);
+        }
+
+        /* Lista de itens */
+        .carrinho-lista {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .item-carrinho {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 1.3rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .item-carrinho:last-child {
+            border-bottom: none;
+        }
+
+        .item-img {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #ccfbf1, #99f6e4);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-info h3 {
+            font-size: 1.05rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-info .preco-unitario {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .item-qtd {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .qtd-btn {
+            width: 32px;
+            height: 32px;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s;
+        }
+
+        .qtd-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .qtd-valor {
+            font-weight: 600;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .item-total {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary);
+            min-width: 90px;
+            text-align: right;
+        }
+
+        .btn-remover {
+            background: none;
+            border: none;
+            color: #ef4444;
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0.3rem;
+            transition: transform 0.15s;
+        }
+
+        .btn-remover:hover {
+            transform: scale(1.2);
+        }
+
+        /* Resumo */
+        .resumo {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 1.8rem;
+        }
+
+        .resumo-linha {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .resumo-linha.total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            border-top: 2px solid var(--border);
+            padding-top: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .acoes .btn {
+            flex: 1;
+            text-align: center;
+            min-width: 160px;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background: #134e4a;
+            color: white;
+            padding: 3rem 1.5rem 1.5rem;
+        }
+
+        .footer-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-brand p {
+            opacity: 0.85;
+            font-size: 0.95rem;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* ========== RESPONSIVO ========== */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1.5rem;
+                gap: 1rem;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .item-carrinho {
+                flex-wrap: wrap;
+                gap: 0.8rem;
+            }
+
+            .item-total {
+                min-width: auto;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🐾 VetCare</a>
+            
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="servicos.html">Serviços</a></li>
+                <li><a href="produtos.html">Produtos</a></li>
+                <li><a href="agendamentos.html">Agendamentos</a></li>
+                <li><a href="carrinho.html" class="active">🛒 Carrinho</a></li>
+                <li><a href="agendamentos.html" class="btn-nav">Agendar Agora</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>🛒 Meu Carrinho</h1>
+        <p>Revise seus produtos antes de finalizar o pedido</p>
+    </section>
+
+    <!-- CONTEÚDO -->
+    <div class="container">
+
+        <!-- Estado vazio -->
+        <div class="carrinho-vazio" id="carrinhoVazio" style="display: none;">
+            <div class="icone">🛒</div>
+            <h2>Seu carrinho está vazio</h2>
+            <p>Adicione produtos da nossa loja para começar.</p>
+            <a href="produtos.html" class="btn btn-primary">Ver Produtos</a>
+        </div>
+
+        <!-- Carrinho com itens -->
+        <div id="carrinhoConteudo">
+            <div class="carrinho-lista" id="listaItens">
+                <!-- Itens serão inseridos via JavaScript -->
+            </div>
+
+            <div class="resumo">
+                <div class="resumo-linha">
+                    <span>Subtotal</span>
+                    <span id="subtotal">R$ 0,00</span>
+                </div>
+                <div class="resumo-linha">
+                    <span>Frete</span>
+                    <span>A calcular</span>
+                </div>
+                <div class="resumo-linha total">
+                    <span>Total</span>
+                    <span id="total">R$ 0,00</span>
+                </div>
+
+                <div class="acoes">
+                    <a href="produtos.html" class="btn btn-outline">Continuar Comprando</a>
+                    <button class="btn btn-primary" onclick="finalizarPedido()">Finalizar pelo WhatsApp</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>🐾 VetCare</h3>
+                <p>Clínica veterinária comprometida com a saúde e o bem-estar dos animais. Produtos selecionados com indicação profissional.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="servicos.html">Serviços</a></li>
+                    <li><a href="produtos.html">Produtos</a></li>
+                    <li><a href="agendamentos.html">Agendamentos</a></li>
+                    <li><a href="carrinho.html">Carrinho</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Contato</h4>
+                <ul>
+                    <li><a href="tel:+551134567890">(11) 3456-7890</a></li>
+                    <li><a href="https://wa.me/5511999999999">WhatsApp</a></li>
+                    <li><a href="mailto:contato@vetcare.com.br">E-mail</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 VetCare Clínica Veterinária — Todos os direitos reservados
+        </div>
+    </footer>
+
+    <script>
+        // ========== MENU MOBILE ==========
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('show');
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('show');
+            });
+        });
+
+        // ========== CARRINHO COM LOCALSTORAGE ==========
+        function getCarrinho() {
+            return JSON.parse(localStorage.getItem('vetcare_carrinho')) || [];
+        }
+
+        function salvarCarrinho(carrinho) {
+            localStorage.setItem('vetcare_carrinho', JSON.stringify(carrinho));
+        }
+
+        function renderizarCarrinho() {
+            const carrinho = getCarrinho();
+            const lista = document.getElementById('listaItens');
+            const vazio = document.getElementById('carrinhoVazio');
+            const conteudo = document.getElementById('carrinhoConteudo');
+
+            if (carrinho.length === 0) {
+                vazio.style.display = 'block';
+                conteudo.style.display = 'none';
+                return;
+            }
+
+            vazio.style.display = 'none';
+            conteudo.style.display = 'block';
+
+            lista.innerHTML = '';
+            let total = 0;
+
+            carrinho.forEach((item, index) => {
+                const subtotalItem = item.preco * item.quantidade;
+                total += subtotalItem;
+
+                const div = document.createElement('div');
+                div.className = 'item-carrinho';
+                div.innerHTML = `
+                    <div class="item-img">${item.emoji || '🛒'}</div>
+                    <div class="item-info">
+                        <h3>${item.nome}</h3>
+                        <div class="preco-unitario">R$ ${item.preco.toFixed(2)} cada</div>
+                    </div>
+                    <div class="item-qtd">
+                        <button class="qtd-btn" onclick="alterarQtd(${index}, -1)">−</button>
+                        <span class="qtd-valor">${item.quantidade}</span>
+                        <button class="qtd-btn" onclick="alterarQtd(${index}, 1)">+</button>
+                    </div>
+                    <div class="item-total">R$ ${subtotalItem.toFixed(2)}</div>
+                    <button class="btn-remover" onclick="removerItem(${index})" title="Remover">🗑️</button>
+                `;
+                lista.appendChild(div);
+            });
+
+            document.getElementById('subtotal').textContent = `R$ ${total.toFixed(2)}`;
+            document.getElementById('total').textContent = `R$ ${total.toFixed(2)}`;
+        }
+
+        function alterarQtd(index, delta) {
+            const carrinho = getCarrinho();
+            carrinho[index].quantidade += delta;
+
+            if (carrinho[index].quantidade <= 0) {
+                carrinho.splice(index, 1);
+            }
+
+            salvarCarrinho(carrinho);
+            renderizarCarrinho();
+        }
+
+        function removerItem(index) {
+            const carrinho = getCarrinho();
+            carrinho.splice(index, 1);
+            salvarCarrinho(carrinho);
+            renderizarCarrinho();
+        }
+
+        function finalizarPedido() {
+            const carrinho = getCarrinho();
+            if (carrinho.length === 0) {
+                alert('Seu carrinho está vazio.');
+                return;
+            }
+
+            let mensagem = '🛒 *Pedido - VetCare*\n\n';
+            let total = 0;
+
+            carrinho.forEach((item, i) => {
+                const subtotal = item.preco * item.quantidade;
+                mensagem += `${i + 1}. ${item.nome}\n`;
+                mensagem += `   Qtd: ${item.quantidade} x R$ ${item.preco.toFixed(2)} = R$ ${subtotal.toFixed(2)}\n\n`;
+                total += subtotal;
+            });
+
+            mensagem += `*Total: R$ ${total.toFixed(2)}*`;
+            mensagem += `\n\nGostaria de finalizar este pedido.`;
+
+            // Substitua pelo número real do WhatsApp da clínica
+            const texto = encodeURIComponent(mensagem);
+            window.open(`https://wa.me/5511999999999?text=${texto}`, '_blank');
+        }
+
+        // Renderiza ao carregar a página
+        renderizarCarrinho();
+    </script>
+</body>
+</html>
+function adicionarCarrinho(nome, preco, emoji = '🛒') {
+    let carrinho = JSON.parse(localStorage.getItem('vetcare_carrinho')) || [];
+    
+    const existente = carrinho.find(item => item.nome === nome);
+    if (existente) {
+        existente.quantidade += 1;
+    } else {
+        carrinho.push({ nome, preco, quantidade: 1, emoji });
+    }
+    
+    localStorage.setItem('vetcare_carrinho', JSON.stringify(carrinho));
+    
+    // Feedback visual
+    const btn = event.target;
+    const textoOriginal = btn.textContent;
+    btn.textContent = '✓ Adicionado';
+    btn.style.background = '#059669';
+    setTimeout(() => {
+        btn.textContent = textoOriginal;
+        btn.style.background = '';
+    }, 1200);
+}
