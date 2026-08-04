@@ -1,1 +1,609 @@
+/* ========================================
+   VetCare - Clínica Veterinária
+   style.css - Estilos Globais
+======================================== */
 
+/* ========== VARIÁVEIS ========== */
+:root {
+    --primary: #0d9488;
+    --primary-dark: #0f766e;
+    --primary-light: #ccfbf1;
+    --accent: #f59e0b;
+    --bg: #f0fdfa;
+    --card: #ffffff;
+    --text: #134e4a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --radius: 16px;
+    --shadow: 0 10px 30px rgba(13, 148, 136, 0.12);
+    --shadow-hover: 0 15px 35px rgba(13, 148, 136, 0.15);
+    --transition: all 0.25s ease;
+}
+
+/* ========== RESET ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* ========== TIPOGRAFIA ========== */
+h1, h2, h3, h4 {
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+h1 { font-size: 2.4rem; }
+h2 { font-size: 1.9rem; }
+h3 { font-size: 1.25rem; }
+
+p {
+    color: var(--muted);
+}
+
+/* ========== NAVBAR ========== */
+.navbar {
+    background: white;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.06);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0.9rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+}
+
+.nav-links a {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text);
+    transition: color 0.2s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--primary);
+}
+
+.btn-nav {
+    background: var(--primary) !important;
+    color: white !important;
+    padding: 0.55rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.btn-nav:hover {
+    background: var(--primary-dark) !important;
+}
+
+.menu-toggle {
+    display: none;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text);
+}
+
+/* ========== HERO ========== */
+.hero {
+    background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+    color: white;
+    padding: 4.5rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "🐾";
+    position: absolute;
+    font-size: 12rem;
+    opacity: 0.06;
+    right: 5%;
+    top: -30px;
+    pointer-events: none;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.8rem;
+    color: white;
+}
+
+.hero p {
+    font-size: 1.15rem;
+    opacity: 0.95;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    color: white;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ========== BOTÕES ========== */
+.btn {
+    display: inline-block;
+    padding: 0.9rem 1.8rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    cursor: pointer;
+    border: none;
+    transition: var(--transition);
+    text-align: center;
+}
+
+.btn-primary {
+    background: white;
+    color: var(--primary);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.btn-outline {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+.btn-outline:hover {
+    background: white;
+    color: var(--primary);
+}
+
+.btn-solid {
+    background: var(--primary);
+    color: white;
+    width: 100%;
+    padding: 0.95rem;
+}
+
+.btn-solid:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(13, 148, 136, 0.3);
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    color: var(--text);
+}
+
+.btn-secondary:hover {
+    background: #cbd5e1;
+}
+
+/* ========== SEÇÕES ========== */
+.section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 4.5rem 1.5rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-header h2 {
+    margin-bottom: 0.5rem;
+}
+
+.section-header p {
+    font-size: 1.1rem;
+}
+
+/* ========== CARDS ========== */
+.card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+}
+
+.service-card,
+.produto-card,
+.servico-card,
+.contact-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border: 1.5px solid transparent;
+}
+
+.service-card:hover,
+.produto-card:hover,
+.servico-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--primary);
+    box-shadow: var(--shadow-hover);
+}
+
+/* ========== GRID ========== */
+.services-grid,
+.produtos-grid,
+.servicos-grid,
+.contact-grid {
+    display: grid;
+    gap: 1.6rem;
+}
+
+.services-grid {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.produtos-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}
+
+.servicos-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.contact-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+/* ========== FORMULÁRIOS ========== */
+.form-group {
+    margin-bottom: 1.3rem;
+}
+
+label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+    font-size: 0.93rem;
+    color: var(--text);
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1.8px solid var(--border);
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.2s;
+    background: #fff;
+    color: var(--text);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.15);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* Horários */
+.horarios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+}
+
+.horario-btn {
+    padding: 0.5rem 1rem;
+    border: 1.8px solid var(--border);
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.15s;
+    color: var(--text);
+}
+
+.horario-btn:hover {
+    border-color: var(--primary);
+    background: var(--primary-light);
+}
+
+.horario-btn.selected {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: white;
+}
+
+/* ========== PRODUTOS ========== */
+.produto-img {
+    height: 160px;
+    background: linear-gradient(135deg, #ccfbf1, #99f6e4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+}
+
+.produto-info {
+    padding: 1.3rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.produto-categoria {
+    font-size: 0.78rem;
+    color: var(--primary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.3rem;
+}
+
+.produto-preco {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.btn-comprar {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.7rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+}
+
+.btn-comprar:hover {
+    background: var(--primary-dark);
+}
+
+/* Filtros */
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.filtro-btn {
+    padding: 0.55rem 1.2rem;
+    border: 1.8px solid var(--border);
+    border-radius: 30px;
+    background: white;
+    color: var(--text);
+    font-weight: 500;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filtro-btn:hover,
+.filtro-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* ========== CARRINHO ========== */
+.carrinho-float {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: var(--primary);
+    color: white;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    box-shadow: 0 6px 20px rgba(13, 148, 136, 0.4);
+    cursor: pointer;
+    z-index: 100;
+    transition: transform 0.2s;
+}
+
+.carrinho-float:hover {
+    transform: scale(1.08);
+}
+
+.carrinho-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--accent);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ========== CTA ========== */
+.cta,
+.cta-box {
+    background: linear-gradient(135deg, #0d9488, #0f766e);
+    color: white;
+    text-align: center;
+    padding: 4rem 1.5rem;
+}
+
+.cta-box {
+    border-radius: var(--radius);
+    margin-top: 3rem;
+}
+
+.cta h2,
+.cta-box h2 {
+    color: white;
+    margin-bottom: 0.8rem;
+}
+
+.cta p,
+.cta-box p {
+    color: white;
+    opacity: 0.95;
+    margin-bottom: 1.8rem;
+}
+
+/* ========== SOBRE / STATS ========== */
+.about-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.stat {
+    text-align: center;
+    background: var(--primary-light);
+    padding: 1.2rem 0.8rem;
+    border-radius: 12px;
+}
+
+.stat strong {
+    display: block;
+    font-size: 1.6rem;
+    color: var(--primary);
+}
+
+.stat span {
+    font-size: 0.85rem;
+    color: var(--text);
+}
+
+/* ========== FOOTER ========== */
+footer {
+    background: #134e4a;
+    color: white;
+    padding: 3rem 1.5rem 1.5rem;
+}
+
+.footer-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.footer-brand h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+}
+
+.footer-brand p {
+    opacity: 0.85;
+    font-size: 0.95rem;
+    color: white;
+}
+
+.footer-links h4 {
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.85);
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* ========== UTILITÁRIOS ========== */
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+   
