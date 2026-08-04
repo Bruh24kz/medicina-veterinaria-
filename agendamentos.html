@@ -1,1 +1,472 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamentos | Clínica Veterinária</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0d9488;
+            --primary-dark: #0f766e;
+            --primary-light: #ccfbf1;
+            --accent: #f59e0b;
+            --bg: #f0fdfa;
+            --card: #ffffff;
+            --text: #134e4a;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --radius: 16px;
+            --shadow: 0 10px 30px rgba(13, 148, 136, 0.12);
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+            color: white;
+            padding: 2.8rem 1.5rem 3.8rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "🐾";
+            position: absolute;
+            font-size: 9rem;
+            opacity: 0.07;
+            right: 8%;
+            top: -30px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+
+        header p {
+            opacity: 0.95;
+            font-size: 1.1rem;
+        }
+
+        /* Container */
+        .container {
+            max-width: 780px;
+            margin: -2.4rem auto 3rem;
+            padding: 0 1.2rem;
+        }
+
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 2.3rem;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 1.8rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 0.4rem;
+        }
+
+        .section-title:first-child {
+            margin-top: 0;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 1.3rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
+            font-size: 0.93rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1.8px solid var(--border);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.2s;
+            background: #fff;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.15);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Horários */
+        .horarios {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            margin-top: 0.4rem;
+        }
+
+        .horario-btn {
+            padding: 0.5rem 1rem;
+            border: 1.8px solid var(--border);
+            border-radius: 8px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 0.92rem;
+            font-weight: 500;
+            transition: all 0.15s;
+            color: var(--text);
+        }
+
+        .horario-btn:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .horario-btn.selected {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Botão */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.08rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 0.8rem;
+        }
+
+        .btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(13, 148, 136, 0.3);
+        }
+
+        /* Mensagem de sucesso */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 2.5rem 1rem;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success-icon {
+            width: 72px;
+            height: 72px;
+            background: #d1fae5;
+            color: #059669;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            margin: 0 auto 1.3rem;
+        }
+
+        .success-message h2 {
+            color: #059669;
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .success-message p {
+            color: var(--muted);
+            margin-bottom: 1.8rem;
+            font-size: 1.05rem;
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: var(--text);
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+            box-shadow: none;
+            transform: none;
+        }
+
+        /* Info box */
+        .info-box {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.2rem;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1.8rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsivo */
+        @media (max-width: 600px) {
+            .row {
+                grid-template-columns: 1fr;
+            }
+            header h1 {
+                font-size: 1.65rem;
+            }
+            .card {
+                padding: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🐾 Agende a Consulta do seu Pet</h1>
+        <p>Cuidado veterinário com carinho e profissionalismo</p>
+    </header>
+
+    <div class="container">
+        <div class="card">
+
+            <div class="info-box">
+                <strong>Atendimento com hora marcada.</strong> Preencha os dados abaixo e entraremos em contato para confirmar o horário.
+            </div>
+
+            <!-- Formulário -->
+            <form id="formAgendamento">
+
+                <!-- Dados do Tutor -->
+                <div class="section-title">👤 Dados do Tutor</div>
+
+                <div class="form-group">
+                    <label for="nome">Nome completo *</label>
+                    <input type="text" id="nome" name="nome" required placeholder="Seu nome completo">
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="email">E-mail *</label>
+                        <input type="email" id="email" name="email" required placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone">Telefone / WhatsApp *</label>
+                        <input type="tel" id="telefone" name="telefone" required placeholder="(11) 99999-9999">
+                    </div>
+                </div>
+
+                <!-- Dados do Pet -->
+                <div class="section-title">🐶 Dados do Pet</div>
+
+                <div class="form-group">
+                    <label for="nomePet">Nome do pet *</label>
+                    <input type="text" id="nomePet" name="nomePet" required placeholder="Ex: Thor, Luna, Mel...">
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="especie">Espécie *</label>
+                        <select id="especie" name="especie" required>
+                            <option value="" disabled selected>Selecione</option>
+                            <option value="cao">Cão</option>
+                            <option value="gato">Gato</option>
+                            <option value="ave">Ave</option>
+                            <option value="roedor">Roedor</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="raca">Raça</label>
+                        <input type="text" id="raca" name="raca" placeholder="Ex: Labrador, SRD...">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="idade">Idade aproximada</label>
+                        <input type="text" id="idade" name="idade" placeholder="Ex: 3 anos, 8 meses">
+                    </div>
+                    <div class="form-group">
+                        <label for="peso">Peso aproximado (kg)</label>
+                        <input type="text" id="peso" name="peso" placeholder="Ex: 12">
+                    </div>
+                </div>
+
+                <!-- Serviço e Horário -->
+                <div class="section-title">📅 Serviço e Horário</div>
+
+                <div class="form-group">
+                    <label for="servico">Tipo de atendimento *</label>
+                    <select id="servico" name="servico" required>
+                        <option value="" disabled selected>Selecione o serviço</option>
+                        <option value="consulta">Consulta de rotina</option>
+                        <option value="vacina">Vacinação</option>
+                        <option value="retorno">Retorno / Reavaliação</option>
+                        <option value="castracao">Castração</option>
+                        <option value="exame">Exames / Coleta</option>
+                        <option value="emergencia">Emergência / Urgência</option>
+                        <option value="outro">Outro</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="data">Data preferida *</label>
+                    <input type="date" id="data" name="data" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Horário preferido *</label>
+                    <div class="horarios" id="listaHorarios">
+                        <button type="button" class="horario-btn" data-hora="08:30">08:30</button>
+                        <button type="button" class="horario-btn" data-hora="09:30">09:30</button>
+                        <button type="button" class="horario-btn" data-hora="10:30">10:30</button>
+                        <button type="button" class="horario-btn" data-hora="11:30">11:30</button>
+                        <button type="button" class="horario-btn" data-hora="14:00">14:00</button>
+                        <button type="button" class="horario-btn" data-hora="15:00">15:00</button>
+                        <button type="button" class="horario-btn" data-hora="16:00">16:00</button>
+                        <button type="button" class="horario-btn" data-hora="17:00">17:00</button>
+                    </div>
+                    <input type="hidden" id="horario" name="horario" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="observacoes">Observações / Motivo da consulta</label>
+                    <textarea id="observacoes" name="observacoes" placeholder="Descreva o motivo da consulta ou qualquer informação importante..."></textarea>
+                </div>
+
+                <button type="submit" class="btn">Confirmar Agendamento</button>
+            </form>
+
+            <!-- Mensagem de sucesso -->
+            <div class="success-message" id="sucesso">
+                <div class="success-icon">✓</div>
+                <h2>Agendamento enviado com sucesso!</h2>
+                <p>Recebemos a solicitação. Nossa equipe entrará em contato em breve pelo WhatsApp ou e-mail para confirmar o horário.</p>
+                <button type="button" class="btn btn-secondary" onclick="novoAgendamento()">Fazer novo agendamento</button>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        © 2026 Clínica Veterinária — Cuidando com amor do seu pet 🐾
+    </footer>
+
+    <script>
+        // Data mínima = hoje
+        const dataInput = document.getElementById('data');
+        const hoje = new Date().toISOString().split('T')[0];
+        dataInput.min = hoje;
+
+        // Seleção de horário
+        const horarios = document.querySelectorAll('.horario-btn');
+        const horarioInput = document.getElementById('horario');
+
+        horarios.forEach(btn => {
+            btn.addEventListener('click', () => {
+                horarios.forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                horarioInput.value = btn.dataset.hora;
+            });
+        });
+
+        // Envio do formulário
+        const form = document.getElementById('formAgendamento');
+        const sucesso = document.getElementById('sucesso');
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            if (!horarioInput.value) {
+                alert('Por favor, selecione um horário.');
+                return;
+            }
+
+            // Aqui você pode integrar com backend, Formspree, WhatsApp, etc.
+            // Por enquanto apenas mostra a mensagem de sucesso
+
+            form.style.display = 'none';
+            sucesso.classList.add('show');
+
+            // Exemplo de dados coletados (para debug ou envio):
+            const dados = {
+                nome: document.getElementById('nome').value,
+                email: document.getElementById('email').value,
+                telefone: document.getElementById('telefone').value,
+                nomePet: document.getElementById('nomePet').value,
+                especie: document.getElementById('especie').value,
+                raca: document.getElementById('raca').value,
+                idade: document.getElementById('idade').value,
+                peso: document.getElementById('peso').value,
+                servico: document.getElementById('servico').value,
+                data: document.getElementById('data').value,
+                horario: horarioInput.value,
+                observacoes: document.getElementById('observacoes').value
+            };
+
+            console.log('Dados do agendamento:', dados);
+        });
+
+        function novoAgendamento() {
+            form.reset();
+            horarios.forEach(b => b.classList.remove('selected'));
+            horarioInput.value = '';
+            form.style.display = 'block';
+            sucesso.classList.remove('show');
+        }
+    </script>
+</body>
+</html>
