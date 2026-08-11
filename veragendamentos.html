@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Agendamentos</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"], select {
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        input[type="text"] {
+            flex: 1;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* Status Badge */
+        .badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .status-confirmado {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-pendente {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-cancelado {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Botões de Ação */
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.2s;
+        }
+
+        .btn-cancel {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-cancel:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-reschedule {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        .btn-reschedule:hover {
+            background-color: #d68910;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Meus Agendamentos</h1>
+        </header>
+
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="Buscar por cliente ou serviço..." onkeyup="filterTable()">
+            <select id="statusFilter" onchange="filterTable()">
+                <option value="">Todos os Status</option>
+                <option value="Confirmado">Confirmado</option>
+                <option value="Pendente">Pendente</option>
+                <option value="Cancelado">Cancelado</option>
+            </select>
+        </div>
+
+        <div class="table-responsive">
+            <table id="appointmentsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Serviço</th>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#1001</td>
+                        <td>Ana Silva</td>
+                        <td>Consulta Médica</td>
+                        <td>15/09/2026</td>
+                        <td>09:00</td>
+                        <td><span class="badge status-confirmado">Confirmado</span></td>
+                        <td>
+                            <button class="btn btn-cancel" onclick="cancelAppointment(this)">Cancelar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#1002</td>
+                        <td>Carlos Eduardo</td>
+                        <td>Corte de Cabelo</td>
+                        <td>15/09/2026</td>
+                        <td>10:30</td>
+                        <td><span class="badge status-pendente">Pendente</span></td>
+                        <td>
+                            <button class="btn btn-cancel" onclick="cancelAppointment(this)">Cancelar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#1003</td>
+                        <td>Mariana Costa</td>
+                        <td>Manutenção de Rede</td>
+                        <td>16/09/2026</td>
+                        <td>14:00</td>
+                        <td><span class="badge status-confirmado">Confirmado</span></td>
+                        <td>
+                            <button class="btn btn-cancel" onclick="cancelAppointment(this)">Cancelar</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#1004</td>
+                        <td>Lucas Pereira</td>
+                        <td>Treino Personalizado</td>
+                        <td>17/09/2026</td>
+                        <td>16:00</td>
+                        <td><span class="badge status-cancelado">Cancelado</span></td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="noResults" class="no-results">Nenhum agendamento encontrado.</div>
+        </div>
+    </div>
+
+    <script>
+        // Função para filtrar a tabela por busca e status
+        function filterTable() {
+            const searchInput = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value.toLowerCase();
+            const table = document.getElementById('appointmentsTable');
+            const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+            let hasVisibleRows = false;
+
+            for (let i = 0; i < rows.length; i++) {
+                const clientText = rows[i].cells[1].textContent.toLowerCase();
+                const serviceText = rows[i].cells[2].textContent.toLowerCase();
+                const statusText = rows[i].cells[5].textContent.toLowerCase();
+
+                const matchesSearch = clientText.includes(searchInput) || serviceText.includes(searchInput);
+                const matchesStatus = statusFilter === "" || statusText.includes(statusFilter);
+
+                if (matchesSearch && matchesStatus) {
+                    rows[i].style.display = "";
+                    hasVisibleRows = true;
+                } else {
+                    rows[i].style.display = "none";
+                }
+            }
+
+            document.getElementById('noResults').style.display = hasVisibleRows ? "none" : "block";
+        }
+
+        // Função de simulação para cancelar agendamento
+        function cancelAppointment(button) {
+            if (confirm("Tem certeza que deseja cancelar este agendamento?")) {
+                const row = button.closest('tr');
+                const badgeCell = row.cells[5];
+                const actionCell = row.cells[6];
+
+                badgeCell.innerHTML = '<span class="badge status-cancelado">Cancelado</span>';
+                actionCell.innerHTML = '-';
+            }
+        }
+    </script>
+
+</body>
+</html>
