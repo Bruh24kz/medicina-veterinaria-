@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossos Serviços</title>
+    <style>
+        /* Estilização básica */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-card p {
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #666;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Conheça Nossos Serviços</h1>
+        <p>Soluções sob medida para o que você precisa</p>
+    </header>
+
+    <div class="container">
+        <div class="services-grid">
+            
+            <div class="service-card">
+                <h3>Desenvolvimento Web</h3>
+                <p>Criação de sites modernos, responsivos e otimizados para mecanismos de busca.</p>
+                <a href="#" class="btn">Saiba Mais</a>
+            </div>
+
+            <div class="service-card">
+                <h3>Design Gráfico</h3>
+                <p>Criação de identidades visuais, logotipos e materiais publicitários marcantes.</p>
+                <a href="#" class="btn">Saiba Mais</a>
+            </div>
+
+            <div class="service-card">
+                <h3>Marketing Digital</h3>
+                <p>Estratégias de conteúdo e redes sociais para impulsionar sua marca online.</p>
+                <a href="#" class="btn">Saiba Mais</a>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
