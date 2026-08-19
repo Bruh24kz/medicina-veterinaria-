@@ -3,207 +3,172 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ver Agendamentos - Clínica Veterinária Patas & Cuidados</title>
+  <title>Ver Agendamentos - VetCare</title>
   <style>
     :root {
-      --primary-color: #2e7d32;
-      --primary-hover: #1b5e20;
-      --bg-color: #f4f6f8;
+      --primary-color: #0d9488;
+      --primary-hover: #0f766e;
+      --bg-color: #f0fdfa;
       --card-bg: #ffffff;
-      --text-color: #333333;
-      --border-color: #e0e0e0;
-      --status-confirmed: #e8f5e9;
-      --status-confirmed-text: #2e7d32;
-      --status-pending: #fff8e1;
-      --status-pending-text: #f57f17;
+      --text-color: #134e4a;
+      --border-color: #e2e8f0;
+      --status-confirmed: #d1fae5;
+      --status-confirmed-text: #059669;
+      --status-pending: #fef3c7;
+      --status-pending-text: #d97706;
+      --status-cancelado: #fee2e2;
+      --status-cancelado-text: #dc2626;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      padding: 20px;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; }
     .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      background: var(--card-bg);
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      max-width: 1100px; margin: 0 auto; background: var(--card-bg);
+      padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    h1 {
-      color: var(--primary-color);
-      font-size: 1.8rem;
-    }
-
-    .filters {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px; }
+    h1 { color: var(--primary-color); font-size: 1.8rem; }
+    .filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
     .filters input, .filters select {
-      padding: 10px;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      outline: none;
-      font-size: 0.95rem;
+      padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; outline: none; font-size: 0.95rem;
     }
-
-    .filters input[type="text"] {
-      flex-grow: 1;
-      min-width: 200px;
-    }
-
-    .table-responsive {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-    }
-
-    th, td {
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    th {
-      background-color: #f8f9fa;
-      color: #555;
-      font-weight: 600;
-    }
-
-    tr:hover {
-      background-color: #f9f9f9;
-    }
-
-    .badge {
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      display: inline-block;
-    }
-
-    .badge-confirmed {
-      background-color: var(--status-confirmed);
-      color: var(--status-confirmed-text);
-    }
-
-    .badge-pending {
-      background-color: var(--status-pending);
-      color: var(--status-pending-text);
-    }
-
-    .btn-action {
-      padding: 6px 12px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      transition: background 0.2s;
-    }
-
-    .btn-details {
-      background-color: var(--primary-color);
-      color: white;
-    }
-
-    .btn-details:hover {
-      background-color: var(--primary-hover);
-    }
+    .filters input[type="text"] { flex-grow: 1; min-width: 200px; }
+    .table-responsive { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th, td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); }
+    th { background-color: #f8f9fa; color: #555; font-weight: 600; }
+    tr:hover { background-color: #f9f9f9; }
+    .badge { padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block; }
+    .badge-confirmed { background: var(--status-confirmed); color: var(--status-confirmed-text); }
+    .badge-pending { background: var(--status-pending); color: var(--status-pending-text); }
+    .badge-cancelado { background: var(--status-cancelado); color: var(--status-cancelado-text); }
+    .btn-action { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; margin-right: 4px; }
+    .btn-details { background: var(--primary-color); color: white; }
+    .btn-details:hover { background: var(--primary-hover); }
+    .btn-confirm { background: #059669; color: white; }
+    .btn-cancel { background: #dc2626; color: white; }
+    .empty { text-align: center; padding: 3rem; color: #64748b; }
+    .loading { text-align: center; padding: 2rem; color: #64748b; }
+    a.voltar { color: var(--primary-color); text-decoration: none; font-weight: 600; }
   </style>
 </head>
 <body>
-
   <div class="container">
     <header>
-      <h1>Agendamentos do Dia</h1>
+      <h1>🐾 Agendamentos - VetCare</h1>
+      <a href="index.html" class="voltar">← Voltar ao site</a>
     </header>
 
     <div class="filters">
-      <input type="text" placeholder="Buscar por paciente ou tutor...">
-      <input type="date" value="2026-08-18">
-      <select>
+      <input type="text" id="busca" placeholder="Buscar por tutor, pet ou telefone...">
+      <input type="date" id="filtroData">
+      <select id="filtroStatus">
         <option value="">Todos os status</option>
-        <option value="confirmado">Confirmado</option>
         <option value="pendente">Pendente</option>
+        <option value="confirmado">Confirmado</option>
+        <option value="cancelado">Cancelado</option>
+        <option value="concluido">Concluído</option>
       </select>
+      <button class="btn-action btn-details" onclick="carregar()">Filtrar</button>
     </div>
 
     <div class="table-responsive">
       <table>
         <thead>
           <tr>
+            <th>Data</th>
             <th>Horário</th>
-            <th>Paciente (Pet)</th>
+            <th>Pet</th>
             <th>Tutor</th>
             <th>Serviço</th>
             <th>Status</th>
             <th>Ações</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td><strong>09:00</strong></td>
-            <td>Thor (Cão)</td>
-            <td>Carlos Silva</td>
-            <td>Consulta Geral</td>
-            <td><span class="badge badge-confirmed">Confirmado</span></td>
-            <td><button class="btn-action btn-details">Ver Detalhes</button></td>
-          </tr>
-          <tr>
-            <td><strong>10:30</strong></td>
-            <td>Mel (Gato)</td>
-            <td>Ana Souza</td>
-            <td>Vacinação (V10)</td>
-            <td><span class="badge badge-confirmed">Confirmado</span></td>
-            <td><button class="btn-action btn-details">Ver Detalhes</button></td>
-          </tr>
-          <tr>
-            <td><strong>11:15</strong></td>
-            <td>Pipoca (Coelho)</td>
-            <td>Lucas Lima</td>
-            <td>Corte de Unhas</td>
-            <td><span class="badge badge-pending">Pendente</span></td>
-            <td><button class="btn-action btn-details">Ver Detalhes</button></td>
-          </tr>
-          <tr>
-            <td><strong>14:00</strong></td>
-            <td>Bob (Cão)</td>
-            <td>Mariana Costa</td>
-            <td>Exame de Sangue</td>
-            <td><span class="badge badge-confirmed">Confirmado</span></td>
-            <td><button class="btn-action btn-details">Ver Detalhes</button></td>
-          </tr>
+        <tbody id="tbody">
+          <tr><td colspan="7" class="loading">Carregando...</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 
-</body>
-</html>
+  <script>
+    async function carregar() {
+      const busca = document.getElementById('busca').value.trim();
+      const data = document.getElementById('filtroData').value;
+      const status = document.getElementById('filtroStatus').value;
+      const params = new URLSearchParams();
+      if (busca) params.set('busca', busca);
+      if (data) params.set('data', data);
+      if (status) params.set('status', status);
+
+      const tbody = document.getElementById('tbody');
+      tbody.innerHTML = '<tr><td colspan="7" class="loading">Carregando...</td></tr>';
+
+      try {
+        const resp = await fetch('/api/agendamentos?' + params.toString());
+        const rows = await resp.json();
+        if (!Array.isArray(rows) || rows.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="empty">Nenhum agendamento encontrado.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = rows.map(a => {
+          const badgeClass = a.status === 'confirmado' ? 'badge-confirmed'
+            : a.status === 'cancelado' ? 'badge-cancelado' : 'badge-pending';
+          const label = (a.status || 'pendente').charAt(0).toUpperCase() + (a.status || 'pendente').slice(1);
+          return `<tr>
+            <td>${a.data || '-'}</td>
+            <td><strong>${a.horario || '-'}</strong></td>
+            <td>${a.nome_pet || '-'} (${a.especie || '-'})</td>
+            <td>${a.nome_tutor || '-'}<br><small>${a.telefone || ''}</small></td>
+            <td>${a.servico || '-'}</td>
+            <td><span class="badge ${badgeClass}">${label}</span></td>
+            <td>
+              <button class="btn-action btn-details" onclick="detalhes(${a.id})">Detalhes</button>
+              ${a.status === 'pendente' ? `<button class="btn-action btn-confirm" onclick="status(${a.id},'confirmado')">Confirmar</button>` : ''}
+              ${a.status !== 'cancelado' && a.status !== 'concluido' ? `<button class="btn-action btn-cancel" onclick="status(${a.id},'cancelado')">Cancelar</button>` : ''}
+            </td>
+          </tr>`;
+        }).join('');
+      } catch (err) {
+        tbody.innerHTML = '<tr><td colspan="7" class="empty">Erro ao carregar. O servidor está rodando em http://localhost:3000?</td></tr>';
+        console.error(err);
+      }
+    }
+
+    async function status(id, novo) {
+      if (!confirm('Alterar status para "' + novo + '"?')) return;
+      try {
+        const resp = await fetch('/api/agendamentos/' + id + '/status', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: novo })
+        });
+        const r = await resp.json();
+        if (!resp.ok) throw new Error(r.error || 'Erro');
+        carregar();
+      } catch (e) {
+        alert(e.message);
+      }
+    }
+
+    async function detalhes(id) {
+      try {
+        const resp = await fetch('/api/agendamentos/' + id);
+        const a = await resp.json();
+        alert(
+          `Agendamento #${a.id}\n\n` +
+          `Tutor: ${a.nome_tutor}\nEmail: ${a.email}\nTel: ${a.telefone}\n\n` +
+          `Pet: ${a.nome_pet} (${a.especie})\nRaça: ${a.raca || '-'}\nIdade: ${a.idade || '-'}\nPeso: ${a.peso || '-'}\n\n` +
+          `Serviço: ${a.servico}\nData: ${a.data} às ${a.horario}\nStatus: ${a.status}\n\n` +
+          `Obs: ${a.observacoes || '-'}`
+        );
+      } catch (e) {
+        alert('Erro ao carregar detalhes');
+      }
+    }
+
+    document.getElementById('busca').addEventListener('keyup', e => { if (e.key === 'Enter') carregar(); });
+    carregar();
+  </script>
 </body>
 </html>
