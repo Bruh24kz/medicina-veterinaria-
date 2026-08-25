@@ -3,67 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clínica Veterinária | Cuidado com Amor</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <title>Clínica Veterinária | VetCare</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #0d9488; --primary-dark: #0f766e; --primary-light: #ccfbf1;
-            --accent: #f59e0b; --bg: #f0fdfa; --card: #ffffff; --text: #134e4a;
-            --muted: #64748b; --border: #e2e8f0; --radius: 16px;
-            --shadow: 0 10px 30px rgba(13, 148, 136, 0.12);
+            --bg: #f0fdfa; --card: #ffffff; --text: #134e4a; --muted: #64748b;
+            --radius: 16px; --shadow: 0 10px 30px rgba(13, 148, 136, 0.12);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Poppins', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
         .navbar { background: white; box-shadow: 0 2px 15px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 100; }
         .nav-container { max-width: 1100px; margin: 0 auto; padding: 0.9rem 1.5rem; display: flex; align-items: center; justify-content: space-between; }
         .logo { font-size: 1.4rem; font-weight: 700; color: var(--primary); text-decoration: none; }
-        .nav-links { display: flex; gap: 1.5rem; list-style: none; align-items: center; flex-wrap: wrap; }
-        .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 0.95rem; }
+        .nav-links { display: flex; gap: 1.2rem; list-style: none; align-items: center; flex-wrap: wrap; }
+        .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 0.92rem; }
         .nav-links a:hover { color: var(--primary); }
-        .btn-nav { background: var(--primary); color: white !important; padding: 0.55rem 1.2rem; border-radius: 8px; font-weight: 600; }
+        .btn-nav { background: var(--primary); color: white !important; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 600; }
         .menu-toggle { display: none; font-size: 1.5rem; background: none; border: none; cursor: pointer; }
-        .hero { background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: white; padding: 5rem 1.5rem 6rem; text-align: center; position: relative; overflow: hidden; }
-        .hero h1 { font-size: 2.6rem; font-weight: 700; margin-bottom: 1rem; }
-        .hero p { font-size: 1.2rem; opacity: 0.95; max-width: 600px; margin: 0 auto 2rem; }
+        .hero { background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%); color: white; padding: 5rem 1.5rem 6rem; text-align: center; }
+        .hero h1 { font-size: 2.4rem; font-weight: 700; margin-bottom: 1rem; }
+        .hero p { font-size: 1.15rem; opacity: 0.95; max-width: 600px; margin: 0 auto 2rem; }
         .hero-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-        .btn { display: inline-block; padding: 0.9rem 1.8rem; border-radius: 10px; font-weight: 600; text-decoration: none; transition: all 0.2s; font-size: 1.05rem; }
+        .btn { display: inline-block; padding: 0.85rem 1.6rem; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 1.05rem; }
         .btn-primary { background: white; color: var(--primary); }
         .btn-outline { background: transparent; color: white; border: 2px solid white; }
-        .section { max-width: 1100px; margin: 0 auto; padding: 4.5rem 1.5rem; }
-        .section-header { text-align: center; margin-bottom: 3rem; }
-        .section-header h2 { font-size: 2rem; margin-bottom: 0.6rem; }
-        .section-header p { color: var(--muted); font-size: 1.1rem; }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.6rem; }
-        .service-card { background: var(--card); border-radius: var(--radius); padding: 2rem 1.6rem; text-align: center; box-shadow: var(--shadow); }
-        .service-icon { font-size: 2.8rem; margin-bottom: 1rem; }
-        .service-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .section { max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem; }
+        .section-header { text-align: center; margin-bottom: 2.5rem; }
+        .section-header h2 { font-size: 1.9rem; margin-bottom: 0.5rem; }
+        .section-header p { color: var(--muted); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.4rem; }
+        .service-card { background: var(--card); border-radius: var(--radius); padding: 1.8rem 1.4rem; text-align: center; box-shadow: var(--shadow); }
+        .service-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+        .service-card h3 { margin-bottom: 0.4rem; }
         .service-card p { color: var(--muted); font-size: 0.95rem; }
-        .about { background: white; padding: 4.5rem 1.5rem; }
-        .about-container { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
-        .about-content h2 { font-size: 2rem; margin-bottom: 1.2rem; }
-        .about-content p { color: var(--muted); margin-bottom: 1rem; }
-        .about-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; }
-        .stat { text-align: center; background: var(--primary-light); padding: 1.2rem 0.8rem; border-radius: 12px; }
-        .stat strong { display: block; font-size: 1.6rem; color: var(--primary); }
-        .about-image { background: linear-gradient(135deg, #ccfbf1, #99f6e4); border-radius: var(--radius); height: 340px; display: flex; align-items: center; justify-content: center; font-size: 7rem; }
-        .cta { background: linear-gradient(135deg, #0d9488, #0f766e); color: white; text-align: center; padding: 4rem 1.5rem; }
-        .cta h2 { font-size: 2rem; margin-bottom: 1rem; }
-        .cta p { font-size: 1.15rem; opacity: 0.95; margin-bottom: 2rem; }
-        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
-        .contact-card { background: var(--card); border-radius: var(--radius); padding: 1.8rem; text-align: center; box-shadow: var(--shadow); }
-        .contact-card .icon { font-size: 2.2rem; margin-bottom: 0.8rem; }
-        footer { background: #134e4a; color: white; padding: 3rem 1.5rem 1.5rem; }
-        .footer-container { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2.5rem; margin-bottom: 2rem; }
+        .cta { background: linear-gradient(135deg, #0d9488, #0f766e); color: white; text-align: center; padding: 3.5rem 1.5rem; }
+        .cta h2 { font-size: 1.8rem; margin-bottom: 0.8rem; }
+        .cta p { margin-bottom: 1.5rem; opacity: 0.95; }
+        footer { background: #134e4a; color: white; padding: 2.5rem 1.5rem 1.5rem; }
+        .footer-container { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 2rem; margin-bottom: 1.5rem; }
         .footer-links ul { list-style: none; }
-        .footer-links a { color: rgba(255,255,255,0.85); text-decoration: none; display: block; margin-bottom: 0.5rem; }
-        .footer-bottom { text-align: center; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.15); font-size: 0.9rem; opacity: 0.8; }
+        .footer-links a { color: rgba(255,255,255,0.85); text-decoration: none; display: block; margin-bottom: 0.4rem; }
+        .footer-bottom { text-align: center; padding-top: 1.2rem; border-top: 1px solid rgba(255,255,255,0.15); font-size: 0.9rem; opacity: 0.85; }
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .menu-toggle { display: block; }
             .nav-links.show { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: white; padding: 1.5rem; gap: 1rem; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-            .about-container { grid-template-columns: 1fr; }
             .footer-container { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
@@ -74,21 +61,22 @@
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Início</a></li>
-                <li><a href="#servicos">Serviços</a></li>
                 <li><a href="agendamentos.html">Agendamentos</a></li>
+                <li><a href="produtos.html">Produtos</a></li>
                 <li><a href="venda.html">Consulta & Venda</a></li>
-                <li><a href="veragendamentos.html">Ver Agenda</a></li>
-                <li><a href="agendamentos.html" class="btn-nav">Agendar Agora</a></li>
+                <li><a href="carrinho.html">Carrinho</a></li>
+                <li><a href="contato.html">Contato</a></li>
+                <li><a href="agendamentos.html" class="btn-nav">Agendar</a></li>
             </ul>
         </div>
     </nav>
 
     <section class="hero">
         <h1>Cuidado veterinário com amor e excelência</h1>
-        <p>Atendimento especializado para cães, gatos e outros pets. Sua família de quatro patas merece o melhor.</p>
+        <p>Atendimento especializado para cães, gatos e outros pets.</p>
         <div class="hero-buttons">
             <a href="agendamentos.html" class="btn btn-primary">Agendar Consulta</a>
-            <a href="venda.html" class="btn btn-outline">Consulta & Venda</a>
+            <a href="produtos.html" class="btn btn-outline">Ver Produtos</a>
         </div>
     </section>
 
@@ -98,61 +86,35 @@
             <p>Atendimento completo para a saúde do seu pet</p>
         </div>
         <div class="services-grid">
-            <div class="service-card"><div class="service-icon">🩺</div><h3>Consultas</h3><p>Avaliação clínica completa com veterinários experientes.</p></div>
-            <div class="service-card"><div class="service-icon">💉</div><h3>Vacinação</h3><p>Protocolos atualizados de vacinação.</p></div>
-            <div class="service-card"><div class="service-icon">🔬</div><h3>Exames</h3><p>Laboratório próprio com resultados rápidos.</p></div>
-            <div class="service-card"><div class="service-icon">🏥</div><h3>Cirurgias</h3><p>Centro cirúrgico para eletivos e emergência.</p></div>
-            <div class="service-card"><div class="service-icon">🦷</div><h3>Odontologia</h3><p>Limpeza dental e tratamentos bucais.</p></div>
-            <div class="service-card"><div class="service-icon">🚨</div><h3>Emergências</h3><p>Atendimento de urgência preparado.</p></div>
-        </div>
-    </section>
-
-    <section class="about" id="sobre">
-        <div class="about-container">
-            <div class="about-content">
-                <h2>Sobre a VetCare</h2>
-                <p>Somos uma clínica veterinária dedicada ao bem-estar animal, com equipe qualificada e estrutura moderna.</p>
-                <div class="about-stats">
-                    <div class="stat"><strong>12+</strong><span>Anos</span></div>
-                    <div class="stat"><strong>8k+</strong><span>Pets</span></div>
-                    <div class="stat"><strong>15</strong><span>Profissionais</span></div>
-                </div>
-            </div>
-            <div class="about-image">🐕🐈</div>
+            <div class="service-card"><div class="service-icon">🩺</div><h3>Consultas</h3><p>Avaliação clínica completa.</p></div>
+            <div class="service-card"><div class="service-icon">💉</div><h3>Vacinação</h3><p>Protocolos atualizados.</p></div>
+            <div class="service-card"><div class="service-icon">🔬</div><h3>Exames</h3><p>Resultados rápidos e precisos.</p></div>
+            <div class="service-card"><div class="service-icon">🏥</div><h3>Cirurgias</h3><p>Centro cirúrgico equipado.</p></div>
         </div>
     </section>
 
     <section class="cta">
-        <h2>Seu pet precisa de atendimento?</h2>
-        <p>Agende agora ou confira produtos e serviços.</p>
+        <h2>Precisa de atendimento ou produtos?</h2>
+        <p>Agende uma consulta ou confira nossa loja.</p>
         <div class="hero-buttons">
-            <a href="agendamentos.html" class="btn btn-primary">Agendar Consulta</a>
-            <a href="venda.html" class="btn btn-outline">Consulta & Venda</a>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="section-header"><h2>Fale Conosco</h2></div>
-        <div class="contact-grid">
-            <div class="contact-card"><div class="icon">📍</div><h3>Endereço</h3><p>Rua dos Animais, 123<br>São Paulo/SP</p></div>
-            <div class="contact-card"><div class="icon">📞</div><h3>Telefone</h3><p>(11) 3456-7890</p></div>
-            <div class="contact-card"><div class="icon">🕐</div><h3>Horário</h3><p>Seg a Sex: 8h às 19h</p></div>
-            <div class="contact-card"><div class="icon">✉️</div><h3>E-mail</h3><p>contato@vetcare.com.br</p></div>
+            <a href="agendamentos.html" class="btn btn-primary">Agendar</a>
+            <a href="produtos.html" class="btn btn-outline">Produtos</a>
+            <a href="contato.html" class="btn btn-outline">Contato</a>
         </div>
     </section>
 
     <footer>
         <div class="footer-container">
-            <div class="footer-brand"><h3>🐾 VetCare</h3><p>Cuidado com excelência e amor.</p></div>
+            <div><h3>🐾 VetCare</h3><p>Cuidado com excelência e amor.</p></div>
             <div class="footer-links"><h4>Navegação</h4><ul>
                 <li><a href="index.html">Início</a></li>
-                <li><a href="agendamentos.html">Agendamentos</a></li>
-                <li><a href="venda.html">Consulta & Venda</a></li>
-                <li><a href="veragendamentos.html">Ver Agenda</a></li>
+                <li><a href="produtos.html">Produtos</a></li>
+                <li><a href="carrinho.html">Carrinho</a></li>
+                <li><a href="contato.html">Contato</a></li>
             </ul></div>
             <div class="footer-links"><h4>Contato</h4><ul>
-                <li><a href="tel:+551134567890">(11) 3456-7890</a></li>
-                <li><a href="https://wa.me/5511999999999">WhatsApp</a></li>
+                <li><a href="https://wa.me/5546999171770">WhatsApp (46) 99917-1770</a></li>
+                <li><a href="mailto:brunabuche@gmail.com">brunabuche@gmail.com</a></li>
             </ul></div>
         </div>
         <div class="footer-bottom">© 2026 VetCare — Todos os direitos reservados</div>
@@ -161,11 +123,6 @@
         function toggleMenu() {
             document.getElementById('navLinks').classList.toggle('show');
         }
-        document.querySelectorAll('.nav-links a').forEach(function(link) {
-            link.addEventListener('click', function() {
-                document.getElementById('navLinks').classList.remove('show');
-            });
-        });
     </script>
 </body>
 </html>
