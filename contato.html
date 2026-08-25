@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contato | VetCare</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0d9488; --primary-dark: #0f766e; --primary-light: #ccfbf1;
+      --bg: #f0fdfa; --card: #fff; --text: #134e4a; --muted: #64748b;
+      --border: #e2e8f0; --radius: 16px; --shadow: 0 10px 28px rgba(13,148,136,0.12);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
+    .navbar { background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 100; }
+    .nav-container { max-width: 900px; margin: 0 auto; padding: 0.85rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-size: 1.3rem; font-weight: 700; color: var(--primary); text-decoration: none; }
+    .nav-links { display: flex; gap: 1.2rem; list-style: none; align-items: center; flex-wrap: wrap; }
+    .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 0.92rem; }
+    .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+    .menu-toggle { display: none; font-size: 1.4rem; background: none; border: none; cursor: pointer; }
+    .hero { background: linear-gradient(135deg, #0d9488, #0f766e); color: #fff; padding: 2.8rem 1.2rem; text-align: center; }
+    .hero h1 { font-size: 1.9rem; margin-bottom: 0.4rem; }
+    .container { max-width: 640px; margin: -1.5rem auto 3rem; padding: 0 1.2rem; }
+    .card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 2rem; }
+    .contato-item {
+      display: flex; align-items: center; gap: 1.2rem; padding: 1.3rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .contato-item:last-child { border-bottom: none; }
+    .icone {
+      width: 56px; height: 56px; border-radius: 14px; background: var(--primary-light);
+      display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0;
+    }
+    .contato-item h3 { font-size: 1rem; margin-bottom: 0.2rem; }
+    .contato-item p { color: var(--muted); font-size: 0.95rem; }
+    .contato-item a { color: var(--primary); font-weight: 600; text-decoration: none; }
+    .contato-item a:hover { text-decoration: underline; }
+    .btn-whats {
+      display: block; width: 100%; margin-top: 1.5rem; padding: 1rem; background: #25d366;
+      color: #fff; border: none; border-radius: 12px; font-size: 1.05rem; font-weight: 600;
+      text-align: center; text-decoration: none; cursor: pointer;
+    }
+    .btn-whats:hover { background: #1da851; }
+    .btn-email {
+      display: block; width: 100%; margin-top: 0.75rem; padding: 1rem; background: var(--primary);
+      color: #fff; border: none; border-radius: 12px; font-size: 1.05rem; font-weight: 600;
+      text-align: center; text-decoration: none;
+    }
+    .btn-email:hover { background: var(--primary-dark); }
+    footer { text-align: center; padding: 1.5rem; color: var(--muted); font-size: 0.9rem; }
+    footer a { color: var(--primary); text-decoration: none; margin: 0 0.4rem; }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .menu-toggle { display: block; }
+      .nav-links.show { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: #fff; padding: 1.2rem; gap: 0.8rem; box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">🐾 VetCare</a>
+      <button class="menu-toggle" type="button" onclick="document.getElementById('navLinks').classList.toggle('show')">☰</button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Início</a></li>
+        <li><a href="agendamentos.html">Agendamentos</a></li>
+        <li><a href="produtos.html">Produtos</a></li>
+        <li><a href="carrinho.html">Carrinho</a></li>
+        <li><a href="contato.html" class="active">Contato</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>📞 Contato</h1>
+    <p>Fale conosco pelo WhatsApp ou e-mail</p>
+  </section>
+
+  <div class="container">
+    <div class="card">
+      <div class="contato-item">
+        <div class="icone">💬</div>
+        <div>
+          <h3>WhatsApp</h3>
+          <p><a href="https://wa.me/5546999171770" target="_blank" rel="noopener">(46) 99917-1770</a></p>
+        </div>
+      </div>
+      <div class="contato-item">
+        <div class="icone">✉️</div>
+        <div>
+          <h3>E-mail</h3>
+          <p><a href="mailto:brunabuche@gmail.com">brunabuche@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="contato-item">
+        <div class="icone">🕐</div>
+        <div>
+          <h3>Horário de atendimento</h3>
+          <p>Segunda a sexta: 8h às 19h<br>Sábados: 8h às 13h</p>
+        </div>
+      </div>
+
+      <a class="btn-whats" href="https://wa.me/5546999171770?text=Ol%C3%A1%21%20Gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20a%20VetCare." target="_blank" rel="noopener">
+        Abrir WhatsApp
+      </a>
+      <a class="btn-email" href="mailto:brunabuche@gmail.com?subject=Contato%20VetCare">
+        Enviar e-mail
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <a href="index.html">Início</a>
+    <a href="produtos.html">Produtos</a>
+    <a href="carrinho.html">Carrinho</a>
+    <p style="margin-top:0.8rem">© 2026 VetCare</p>
+  </footer>
+</body>
+</html>
