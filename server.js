@@ -1,37 +1,32 @@
 /**
  * VetCare - Sistema Clínica Veterinária
- * Backend Express + SQLite
- * Adaptado aos formulários de agendamento, produtos e visualização
+ * Backend Express + SQLite (compatível com GitHub Codespaces)
  */
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const cors = require('cors');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const HOST = '0.0.0.0'; // necessário no Codespace
 const DB_PATH = path.join(__dirname, 'siscristovao.db');
 
-// Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
-// Conexão SQLite
 const db = new sqlite3.Database(DB_PATH, (err) => {
   if (err) {
-    console.error('❌ Erro ao abrir banco:', err.message);
+    console.error('Erro ao abrir banco:', err.message);
   } else {
-    console.log('✅ Banco de dados conectado:', DB_PATH);
+    console.log('Banco conectado:', DB_PATH);
   }
 });
 
-// ==========================================================================
-// CRIAÇÃO / MIGRAÇÃO DAS TABELAS
-// ==========================================================================
 db.serialize(() => {
-  // Agendamentos (formulário principal de consulta)
   db.run(`
     CREATE TABLE IF NOT EXISTS agendamentos (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -52,7 +47,6 @@ db.serialize(() => {
     )
   `);
 
-  // Produtos da loja
   db.run(`
     CREATE TABLE IF NOT EXISTS produtos (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -66,7 +60,6 @@ db.serialize(() => {
     )
   `);
 
-  // Pedidos (opcional - para quando quiser gravar vendas no banco)
   db.run(`
     CREATE TABLE IF NOT EXISTS pedidos (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -79,10 +72,9 @@ db.serialize(() => {
     )
   `);
 
-  // Seed inicial de produtos (só se a tabela estiver vazia)
   db.get('SELECT COUNT(*) AS total FROM produtos', (err, row) => {
     if (!err && row && row.total === 0) {
-      const produtosSeed = [
+      const seed = [
         ['Ração Premium Cães', 'Alimento completo. 15kg', 189.9, 'racao', '🦴'],
         ['Ração Premium Gatos', 'Fórmula balanceada. 10kg', 159.9, 'racao', '🐱'],
         ['Vermífugo Canino', 'Para cães 10-20kg', 42.0, 'medicamento', '💉'],
@@ -97,18 +89,13 @@ db.serialize(() => {
       const stmt = db.prepare(
         'INSERT INTO produtos (nome, descricao, preco, categoria, emoji) VALUES (?, ?, ?, ?, ?)'
       );
-      produtosSeed.forEach((p) => stmt.run(p));
-      stmt.finalize();
-      console.log('📦 Produtos iniciais inseridos no banco.');
+      seed.forEach((p) => stmt.run(p));
+      stmt.finalize(() => console.log('Produtos iniciais inseridos.'));
     }
   });
 });
 
-// ==========================================================================
-// ROTAS - AGENDAMENTOS
-// ==========================================================================
-
-// Criar agendamento (usado pelos formulários)
+// ---------- AGENDAMENTOS ----------
 app.post('/api/agendamentos', (req, res) => {
   const {
     nome, email, telefone,
@@ -117,10 +104,7 @@ app.post('/api/agendamentos', (req, res) => {
   } = req.body;
 
   if (!nome || !email || !telefone || !nomePet || !especie || !servico || !data || !horario) {
-    return res.status(400).json({
-      success: false,
-      error: 'Preencha todos os campos obrigatórios.'
-    });
+    return res.status(400).json({ success: false, error: 'Preencha todos os campos obrigatórios.' });
   }
 
   const sql = `
@@ -131,45 +115,29 @@ app.post('/api/agendamentos', (req, res) => {
 
   db.run(
     sql,
-    [
-      nome, email, telefone,
-      nomePet, especie, raca || null, idade || null, peso || null,
-      servico, data, horario, observacoes || null
-    ],
+    [nome, email, telefone, nomePet, especie, raca || null, idade || null, peso || null, servico, data, horario, observacoes || null],
     function (err) {
       if (err) {
         console.error(err);
         return res.status(500).json({ success: false, error: err.message });
       }
-      res.json({
-        success: true,
-        id: this.lastID,
-        message: 'Agendamento registrado com sucesso!'
-      });
+      res.json({ success: true, id: this.lastID, message: 'Agendamento registrado com sucesso!' });
     }
   );
 });
 
-// Listar agendamentos (com filtros opcionais)
 app.get('/api/agendamentos', (req, res) => {
   const { data, status, busca } = req.query;
   let sql = 'SELECT * FROM agendamentos WHERE 1=1';
   const params = [];
 
-  if (data) {
-    sql += ' AND data = ?';
-    params.push(data);
-  }
-  if (status) {
-    sql += ' AND status = ?';
-    params.push(status);
-  }
+  if (data) { sql += ' AND data = ?'; params.push(data); }
+  if (status) { sql += ' AND status = ?'; params.push(status); }
   if (busca) {
     sql += ' AND (nome_tutor LIKE ? OR nome_pet LIKE ? OR telefone LIKE ?)';
     const q = `%${busca}%`;
     params.push(q, q, q);
   }
-
   sql += ' ORDER BY data DESC, horario ASC';
 
   db.all(sql, params, (err, rows) => {
@@ -178,7 +146,6 @@ app.get('/api/agendamentos', (req, res) => {
   });
 });
 
-// Detalhe de um agendamento
 app.get('/api/agendamentos/:id', (req, res) => {
   db.get('SELECT * FROM agendamentos WHERE id = ?', [req.params.id], (err, row) => {
     if (err) return res.status(500).json({ error: err.message });
@@ -187,28 +154,20 @@ app.get('/api/agendamentos/:id', (req, res) => {
   });
 });
 
-// Atualizar status (confirmado / cancelado / concluído)
 app.patch('/api/agendamentos/:id/status', (req, res) => {
   const { status } = req.body;
   const permitidos = ['pendente', 'confirmado', 'cancelado', 'concluido'];
   if (!permitidos.includes(status)) {
     return res.status(400).json({ error: 'Status inválido' });
   }
-  db.run(
-    'UPDATE agendamentos SET status = ? WHERE id = ?',
-    [status, req.params.id],
-    function (err) {
-      if (err) return res.status(500).json({ error: err.message });
-      if (this.changes === 0) return res.status(404).json({ error: 'Agendamento não encontrado' });
-      res.json({ success: true, status });
-    }
-  );
+  db.run('UPDATE agendamentos SET status = ? WHERE id = ?', [status, req.params.id], function (err) {
+    if (err) return res.status(500).json({ error: err.message });
+    if (this.changes === 0) return res.status(404).json({ error: 'Agendamento não encontrado' });
+    res.json({ success: true, status });
+  });
 });
 
-// ==========================================================================
-// ROTAS - PRODUTOS
-// ==========================================================================
-
+// ---------- PRODUTOS ----------
 app.get('/api/produtos', (req, res) => {
   const { categoria } = req.query;
   let sql = 'SELECT * FROM produtos WHERE ativo = 1';
@@ -224,18 +183,7 @@ app.get('/api/produtos', (req, res) => {
   });
 });
 
-app.get('/api/produtos/:id', (req, res) => {
-  db.get('SELECT * FROM produtos WHERE id = ? AND ativo = 1', [req.params.id], (err, row) => {
-    if (err) return res.status(500).json({ error: err.message });
-    if (!row) return res.status(404).json({ error: 'Produto não encontrado' });
-    res.json(row);
-  });
-});
-
-// ==========================================================================
-// ROTAS - PEDIDOS (opcional - grava venda no banco)
-// ==========================================================================
-
+// ---------- PEDIDOS ----------
 app.post('/api/pedidos', (req, res) => {
   const { nome_cliente, telefone, total, itens } = req.body;
   if (!total || !itens || !Array.isArray(itens) || itens.length === 0) {
@@ -258,35 +206,19 @@ app.get('/api/pedidos', (req, res) => {
   });
 });
 
-// ==========================================================================
-// COMPATIBILIDADE com rotas antigas do server.js original (opcional)
-// ==========================================================================
-app.post('/salvar-cliente', (req, res) => {
-  // Redireciona lógica antiga para o novo modelo se necessário
-  res.status(410).json({ error: 'Rota descontinuada. Use /api/agendamentos' });
+// Health check (útil no Codespace)
+app.get('/api/health', (req, res) => {
+  res.json({ ok: true, db: fs.existsSync(DB_PATH) });
 });
 
-// ==========================================================================
-// INICIALIZAÇÃO
-// ==========================================================================
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
   console.log('====================================================');
-  console.log('🐾 VetCare rodando em http://localhost:' + PORT);
-  console.log('📂 Banco: siscristovao.db');
-  console.log('====================================================');
-  console.log('Endpoints principais:');
-  console.log('  POST /api/agendamentos');
-  console.log('  GET  /api/agendamentos');
-  console.log('  GET  /api/produtos');
-  console.log('  POST /api/pedidos');
+  console.log('VetCare rodando em http://' + HOST + ':' + PORT);
+  console.log('Banco: siscristovao.db');
+  console.log('No Codespace: abra a porta ' + PORT + ' (Forwarded Ports)');
   console.log('====================================================');
 });
 
-// Encerramento limpo
 process.on('SIGINT', () => {
-  db.close((err) => {
-    if (err) console.error(err.message);
-    console.log('Banco fechado.');
-    process.exit(0);
-  });
+  db.close(() => process.exit(0));
 });

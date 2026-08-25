@@ -1,6 +1,6 @@
 {
   "name": "medicina-veterinaria-vetcare",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Sistema de clínica veterinária VetCare - agendamentos, produtos e vendas",
   "main": "server.js",
   "scripts": {
@@ -10,10 +10,9 @@
   "dependencies": {
     "express": "^4.21.0",
     "sqlite3": "^5.1.7",
-    "body-parser": "^1.20.3",
     "cors": "^2.8.5"
   },
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   }
 }
