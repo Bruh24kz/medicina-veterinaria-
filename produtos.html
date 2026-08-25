@@ -15,12 +15,11 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Poppins', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
     .navbar { background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 100; }
-    .nav-container { max-width: 1000px; margin: 0 auto; padding: 0.85rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
+    .nav-container { max-width: 1100px; margin: 0 auto; padding: 0.85rem 1.2rem; display: flex; align-items: center; justify-content: space-between; }
     .logo { font-size: 1.3rem; font-weight: 700; color: var(--primary); text-decoration: none; }
-    .nav-links { display: flex; gap: 1.2rem; list-style: none; align-items: center; flex-wrap: wrap; }
-    .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 0.92rem; }
+    .nav-links { display: flex; gap: 1.2rem; list-style: none; align-items: center; flex-wrap: nowrap; }
+    .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; font-size: 0.9rem; white-space: nowrap; }
     .nav-links a:hover, .nav-links a.active { color: var(--primary); }
-    .btn-nav { background: var(--primary); color: #fff !important; padding: 0.45rem 1rem; border-radius: 8px; font-weight: 600; }
     .menu-toggle { display: none; font-size: 1.4rem; background: none; border: none; cursor: pointer; }
     .hero { background: linear-gradient(135deg, #0d9488, #0f766e); color: #fff; padding: 2.5rem 1.2rem; text-align: center; }
     .hero h1 { font-size: 1.9rem; margin-bottom: 0.35rem; }
@@ -29,39 +28,24 @@
     .filtro-btn:hover, .filtro-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
     .container { max-width: 1000px; margin: 0 auto; padding: 1.5rem 1.2rem 4rem; }
     .produtos-lista { display: flex; flex-direction: column; gap: 0.75rem; }
-    .produto-item {
-      background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
-      padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between;
-      gap: 1rem; border: 1.5px solid transparent;
-    }
+    .produto-item { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; border: 1.5px solid transparent; }
     .produto-item:hover { border-color: var(--primary); }
     .produto-nome { font-weight: 600; font-size: 1.02rem; }
     .produto-cat { font-size: 0.78rem; color: var(--primary); font-weight: 600; text-transform: uppercase; margin-bottom: 0.15rem; }
     .produto-preco { font-size: 1.15rem; font-weight: 700; color: var(--primary); white-space: nowrap; }
-    .btn-add {
-      background: var(--primary); color: #fff; border: none; padding: 0.55rem 1.1rem;
-      border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; white-space: nowrap;
-    }
+    .btn-add { background: var(--primary); color: #fff; border: none; padding: 0.55rem 1.1rem; border-radius: 8px; font-weight: 600; font-size: 0.9rem; cursor: pointer; white-space: nowrap; }
     .btn-add:hover { background: var(--primary-dark); }
     .btn-add.ok { background: #059669; }
     .produto-direita { display: flex; align-items: center; gap: 1rem; }
-    .carrinho-float {
-      position: fixed; bottom: 22px; right: 22px; background: var(--primary); color: #fff;
-      width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center;
-      justify-content: center; font-size: 1.5rem; box-shadow: 0 6px 18px rgba(13,148,136,0.4);
-      cursor: pointer; z-index: 100; text-decoration: none;
-    }
-    .carrinho-count {
-      position: absolute; top: -4px; right: -4px; background: var(--accent); color: #fff;
-      font-size: 0.72rem; font-weight: 700; width: 20px; height: 20px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-    }
+    .carrinho-float { position: fixed; bottom: 22px; right: 22px; background: var(--primary); color: #fff; width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 6px 18px rgba(13,148,136,0.4); cursor: pointer; z-index: 100; text-decoration: none; }
+    .carrinho-count { position: absolute; top: -4px; right: -4px; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 700; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
     footer { background: #134e4a; color: #fff; padding: 2rem 1.2rem; text-align: center; }
     footer a { color: rgba(255,255,255,0.85); text-decoration: none; margin: 0 0.5rem; }
-    @media (max-width: 640px) {
+    @media (max-width: 900px) {
       .nav-links { display: none; }
       .menu-toggle { display: block; }
       .nav-links.show { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: #fff; padding: 1.2rem; gap: 0.8rem; box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+      .navbar { position: relative; }
       .produto-item { flex-direction: column; align-items: flex-start; }
       .produto-direita { width: 100%; justify-content: space-between; }
     }
@@ -71,23 +55,22 @@
   <nav class="navbar">
     <div class="nav-container">
       <a href="index.html" class="logo">🐾 VetCare</a>
-      <button class="menu-toggle" type="button" onclick="toggleMenu()">☰</button>
+      <button class="menu-toggle" type="button" onclick="document.getElementById('navLinks').classList.toggle('show')">☰</button>
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Início</a></li>
         <li><a href="agendamentos.html">Agendamentos</a></li>
         <li><a href="produtos.html" class="active">Produtos</a></li>
+        <li><a href="venda.html">Consulta & Venda</a></li>
+        <li><a href="veragendamentos.html">Ver Agenda</a></li>
         <li><a href="carrinho.html">Carrinho</a></li>
         <li><a href="contato.html">Contato</a></li>
-        <li><a href="carrinho.html" class="btn-nav">🛒 Carrinho</a></li>
       </ul>
     </div>
   </nav>
-
   <section class="hero">
     <h1>🛒 Produtos</h1>
     <p>Nome e valor — adicione ao carrinho com um clique</p>
   </section>
-
   <div class="filtros">
     <button type="button" class="filtro-btn active" data-cat="todos">Todos</button>
     <button type="button" class="filtro-btn" data-cat="racao">Rações</button>
@@ -95,16 +78,10 @@
     <button type="button" class="filtro-btn" data-cat="higiene">Higiene</button>
     <button type="button" class="filtro-btn" data-cat="acessorio">Acessórios</button>
   </div>
-
   <div class="container">
     <div class="produtos-lista" id="listaProdutos"></div>
   </div>
-
-  <a href="carrinho.html" class="carrinho-float" title="Ver carrinho">
-    🛒
-    <span class="carrinho-count" id="carrinhoCount">0</span>
-  </a>
-
+  <a href="carrinho.html" class="carrinho-float" title="Ver carrinho">🛒<span class="carrinho-count" id="carrinhoCount">0</span></a>
   <footer>
     <p><strong>🐾 VetCare</strong></p>
     <div style="margin-top:0.8rem">
@@ -115,7 +92,6 @@
     </div>
     <p style="margin-top:1rem;opacity:0.8;font-size:0.9rem">© 2026 VetCare</p>
   </footer>
-
   <script>
     var PRODUTOS = [
       { nome: 'Ração Premium Cães 15kg', preco: 189.90, categoria: 'racao' },
@@ -131,24 +107,14 @@
       { nome: 'Comedouro Inox', preco: 35.00, categoria: 'acessorio' },
       { nome: 'Petisco Natural 200g', preco: 22.50, categoria: 'racao' }
     ];
-
     var catAtual = 'todos';
-
-    function getCarrinho() {
-      return JSON.parse(localStorage.getItem('vetcare_carrinho') || '[]');
-    }
-
-    function salvarCarrinho(c) {
-      localStorage.setItem('vetcare_carrinho', JSON.stringify(c));
-      atualizarContador();
-    }
-
+    function getCarrinho() { return JSON.parse(localStorage.getItem('vetcare_carrinho') || '[]'); }
+    function salvarCarrinho(c) { localStorage.setItem('vetcare_carrinho', JSON.stringify(c)); atualizarContador(); }
     function atualizarContador() {
       var c = getCarrinho();
       var n = c.reduce(function(s, i) { return s + (i.quantidade || 1); }, 0);
       document.getElementById('carrinhoCount').textContent = n;
     }
-
     function adicionarCarrinho(nome, preco, btn) {
       var carrinho = getCarrinho();
       var ex = carrinho.find(function(i) { return i.nome === nome; });
@@ -156,58 +122,31 @@
       else carrinho.push({ nome: nome, preco: preco, quantidade: 1 });
       salvarCarrinho(carrinho);
       if (btn) {
-        var t = btn.textContent;
-        btn.textContent = '✓ Adicionado';
-        btn.classList.add('ok');
-        setTimeout(function() {
-          btn.textContent = t;
-          btn.classList.remove('ok');
-        }, 1000);
+        var t = btn.textContent; btn.textContent = '✓ Adicionado'; btn.classList.add('ok');
+        setTimeout(function() { btn.textContent = t; btn.classList.remove('ok'); }, 1000);
       }
     }
-
     function renderProdutos() {
       var lista = document.getElementById('listaProdutos');
-      var items = PRODUTOS.filter(function(p) {
-        return catAtual === 'todos' || p.categoria === catAtual;
-      });
-      if (!items.length) {
-        lista.innerHTML = '<p style="text-align:center;color:var(--muted);padding:2rem">Nenhum produto nesta categoria.</p>';
-        return;
-      }
+      var items = PRODUTOS.filter(function(p) { return catAtual === 'todos' || p.categoria === catAtual; });
+      if (!items.length) { lista.innerHTML = '<p style="text-align:center;color:var(--muted);padding:2rem">Nenhum produto nesta categoria.</p>'; return; }
       var cats = { racao: 'Ração', medicamento: 'Medicamento', higiene: 'Higiene', acessorio: 'Acessório' };
       lista.innerHTML = items.map(function(p) {
-        return '<div class="produto-item">' +
-          '<div><div class="produto-cat">' + (cats[p.categoria] || p.categoria) + '</div>' +
-          '<div class="produto-nome">' + p.nome + '</div></div>' +
-          '<div class="produto-direita">' +
-          '<span class="produto-preco">R$ ' + p.preco.toFixed(2).replace('.', ',') + '</span>' +
-          '<button type="button" class="btn-add" data-nome="' + p.nome.replace(/"/g, '&quot;') + '" data-preco="' + p.preco + '">Adicionar</button>' +
-          '</div></div>';
+        return '<div class="produto-item"><div><div class="produto-cat">' + (cats[p.categoria] || p.categoria) + '</div><div class="produto-nome">' + p.nome + '</div></div><div class="produto-direita"><span class="produto-preco">R$ ' + p.preco.toFixed(2).replace('.', ',') + '</span><button type="button" class="btn-add" data-nome="' + p.nome.replace(/"/g, '"') + '" data-preco="' + p.preco + '">Adicionar</button></div></div>';
       }).join('');
-
       lista.querySelectorAll('.btn-add').forEach(function(btn) {
         btn.addEventListener('click', function() {
           adicionarCarrinho(btn.getAttribute('data-nome'), parseFloat(btn.getAttribute('data-preco')), btn);
         });
       });
     }
-
     document.querySelectorAll('.filtro-btn').forEach(function(b) {
       b.addEventListener('click', function() {
         document.querySelectorAll('.filtro-btn').forEach(function(x) { x.classList.remove('active'); });
-        b.classList.add('active');
-        catAtual = b.getAttribute('data-cat');
-        renderProdutos();
+        b.classList.add('active'); catAtual = b.getAttribute('data-cat'); renderProdutos();
       });
     });
-
-    function toggleMenu() {
-      document.getElementById('navLinks').classList.toggle('show');
-    }
-
-    atualizarContador();
-    renderProdutos();
+    atualizarContador(); renderProdutos();
   </script>
 </body>
 </html>
