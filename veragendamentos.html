@@ -1,174 +1,368 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ver Agendamentos - VetCare</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ver Agendamentos | VetCare</title>
   <style>
     :root {
-      --primary-color: #0d9488;
-      --primary-hover: #0f766e;
-      --bg-color: #f0fdfa;
+      --primary: #2a9d8f;
+      --primary-hover: #218377;
+      --bg-color: #f4f7f6;
       --card-bg: #ffffff;
-      --text-color: #134e4a;
-      --border-color: #e2e8f0;
-      --status-confirmed: #d1fae5;
-      --status-confirmed-text: #059669;
-      --status-pending: #fef3c7;
-      --status-pending-text: #d97706;
-      --status-cancelado: #fee2e2;
-      --status-cancelado-text: #dc2626;
+      --text-color: #2b2d42;
+      --text-muted: #6c757d;
+      --border-color: #e0e0e0;
+      
+      /* Status Colors */
+      --status-confirmado: #d4edda;
+      --status-confirmado-text: #155724;
+      --status-pendente: #fff3cd;
+      --status-pendente-text: #856404;
+      --status-cancelado: #f8d7da;
+      --status-cancelado-text: #721c24;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-    body { background-color: var(--bg-color); color: var(--text-color); padding: 20px; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      padding: 20px;
+    }
+
     .container {
-      max-width: 1100px; margin: 0 auto; background: var(--card-bg);
-      padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      max-width: 1100px;
+      margin: 0 auto;
     }
-    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px; }
-    h1 { color: var(--primary-color); font-size: 1.8rem; }
-    .filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      color: var(--primary);
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+    }
+
+    /* Filters Bar */
+    .filters {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
     .filters input, .filters select {
-      padding: 10px; border: 1px solid var(--border-color); border-radius: 6px; outline: none; font-size: 0.95rem;
+      padding: 10px 14px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      outline: none;
+      font-size: 0.95rem;
     }
-    .filters input[type="text"] { flex-grow: 1; min-width: 200px; }
-    .table-responsive { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; text-align: left; }
-    th, td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); }
-    th { background-color: #f8f9fa; color: #555; font-weight: 600; }
-    tr:hover { background-color: #f9f9f9; }
-    .badge { padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; display: inline-block; }
-    .badge-confirmed { background: var(--status-confirmed); color: var(--status-confirmed-text); }
-    .badge-pending { background: var(--status-pending); color: var(--status-pending-text); }
-    .badge-cancelado { background: var(--status-cancelado); color: var(--status-cancelado-text); }
-    .btn-action { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; margin-right: 4px; }
-    .btn-details { background: var(--primary-color); color: white; }
-    .btn-details:hover { background: var(--primary-hover); }
-    .btn-confirm { background: #059669; color: white; }
-    .btn-cancel { background: #dc2626; color: white; }
-    .empty { text-align: center; padding: 3rem; color: #64748b; }
-    .loading { text-align: center; padding: 2rem; color: #64748b; }
-    a.voltar { color: var(--primary-color); text-decoration: none; font-weight: 600; }
+
+    .filters input[type="text"] {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    /* Appointments Grid */
+    .grid-agendamentos {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 8px;
+      padding: 18px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+      position: relative;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .card-header h3 {
+      font-size: 1.2rem;
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .badge.confirmado {
+      background-color: var(--status-confirmado);
+      color: var(--status-confirmado-text);
+    }
+
+    .badge.pendente {
+      background-color: var(--status-pendente);
+      color: var(--status-pendente-text);
+    }
+
+    .badge.cancelado {
+      background-color: var(--status-cancelado);
+      color: var(--status-cancelado-text);
+    }
+
+    .info-row {
+      margin-bottom: 6px;
+      font-size: 0.95rem;
+    }
+
+    .info-row strong {
+      color: var(--text-muted);
+    }
+
+    /* Modal Styling */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: white;
+      padding: 24px;
+      border-radius: 8px;
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .modal h2 {
+      margin-bottom: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .btn-secondary {
+      background: #e0e0e0;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
+
   <div class="container">
     <header>
-      <h1>🐾 Agendamentos - VetCare</h1>
-      <a href="index.html" class="voltar">← Voltar ao site</a>
+      <h1>🩺 Agenda Veterinária</h1>
+      <button class="btn-primary" onclick="toggleModal(true)">+ Novo Agendamento</button>
     </header>
 
+    <!-- Filtros de Busca -->
     <div class="filters">
-      <input type="text" id="busca" placeholder="Buscar por tutor, pet ou telefone...">
-      <input type="date" id="filtroData">
-      <select id="filtroStatus">
-        <option value="">Todos os status</option>
-        <option value="pendente">Pendente</option>
+      <input type="text" id="searchInput" placeholder="Buscar por pet ou tutor..." oninput="filtrarAgendamentos()" />
+      <input type="date" id="dateFilter" onchange="filtrarAgendamentos()" />
+      <select id="statusFilter" onchange="filtrarAgendamentos()">
+        <option value="">Todos os Status</option>
         <option value="confirmado">Confirmado</option>
+        <option value="pendente">Pendente</option>
         <option value="cancelado">Cancelado</option>
-        <option value="concluido">Concluído</option>
       </select>
-      <button class="btn-action btn-details" onclick="carregar()">Filtrar</button>
     </div>
 
-    <div class="table-responsive">
-      <table>
-        <thead>
-          <tr>
-            <th>Data</th>
-            <th>Horário</th>
-            <th>Pet</th>
-            <th>Tutor</th>
-            <th>Serviço</th>
-            <th>Status</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="tbody">
-          <tr><td colspan="7" class="loading">Carregando...</td></tr>
-        </tbody>
-      </table>
+    <!-- Lista de Agendamentos -->
+    <div class="grid-agendamentos" id="listaAgendamentos"></div>
+  </div>
+
+  <!-- Modal para Novo Agendamento -->
+  <div class="modal-overlay" id="modalNovoAgendamento">
+    <div class="modal">
+      <h2>Novo Agendamento</h2>
+      <form id="formAgendamento" onsubmit="salvarAgendamento(event)">
+        <div class="form-group">
+          <label>Nome do Pet</label>
+          <input type="text" id="petName" required placeholder="Ex: Thor (Cão)" />
+        </div>
+        <div class="form-group">
+          <label>Nome do Tutor</label>
+          <input type="text" id="tutorName" required placeholder="Ex: Carlos Silva" />
+        </div>
+        <div class="form-group">
+          <label>Procedimento / Consulta</label>
+          <input type="text" id="service" required placeholder="Ex: Vacinação V10" />
+        </div>
+        <div class="form-group">
+          <label>Veterinário(a)</label>
+          <input type="text" id="vet" required placeholder="Ex: Dra. Amanda" />
+        </div>
+        <div class="form-group">
+          <label>Data e Hora</label>
+          <input type="datetime-local" id="datetime" required />
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select id="status">
+            <option value="confirmado">Confirmado</option>
+            <option value="pendente">Pendente</option>
+          </select>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" onclick="toggleModal(false)">Cancelar</button>
+          <button type="submit" class="btn-primary">Salvar</button>
+        </div>
+      </form>
     </div>
   </div>
 
   <script>
-    async function carregar() {
-      const busca = document.getElementById('busca').value.trim();
-      const data = document.getElementById('filtroData').value;
-      const status = document.getElementById('filtroStatus').value;
-      const params = new URLSearchParams();
-      if (busca) params.set('busca', busca);
-      if (data) params.set('data', data);
-      if (status) params.set('status', status);
+    // Dados iniciais de simulação
+    let agendamentos = [
+      { id: 1, pet: "Thor (Cão - Golden)", tutor: "Carlos Silva", servico: "Consulta Geral", vet: "Dr. Roberto", data: "2026-08-26T10:00", status: "confirmado" },
+      { id: 2, pet: "Mimi (Gato - Siames)", tutor: "Beatriz Costa", servico: "Vacinação V4", vet: "Dra. Amanda", data: "2026-08-26T11:30", status: "pendente" },
+      { id: 3, pet: "Bob (Cão - Poodle)", tutor: "Fernanda Lima", servico: "Limpeza de Tártaro", vet: "Dr. Roberto", data: "2026-08-27T14:00", status: "confirmado" }
+    ];
 
-      const tbody = document.getElementById('tbody');
-      tbody.innerHTML = '<tr><td colspan="7" class="loading">Carregando...</td></tr>';
+    function renderizarLista(dados) {
+      const container = document.getElementById("listaAgendamentos");
+      container.innerHTML = "";
 
-      try {
-        const resp = await fetch('/api/agendamentos?' + params.toString());
-        const rows = await resp.json();
-        if (!Array.isArray(rows) || rows.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="7" class="empty">Nenhum agendamento encontrado.</td></tr>';
-          return;
-        }
-        tbody.innerHTML = rows.map(a => {
-          const badgeClass = a.status === 'confirmado' ? 'badge-confirmed'
-            : a.status === 'cancelado' ? 'badge-cancelado' : 'badge-pending';
-          const label = (a.status || 'pendente').charAt(0).toUpperCase() + (a.status || 'pendente').slice(1);
-          return `<tr>
-            <td>${a.data || '-'}</td>
-            <td><strong>${a.horario || '-'}</strong></td>
-            <td>${a.nome_pet || '-'} (${a.especie || '-'})</td>
-            <td>${a.nome_tutor || '-'}<br><small>${a.telefone || ''}</small></td>
-            <td>${a.servico || '-'}</td>
-            <td><span class="badge ${badgeClass}">${label}</span></td>
-            <td>
-              <button class="btn-action btn-details" onclick="detalhes(${a.id})">Detalhes</button>
-              ${a.status === 'pendente' ? `<button class="btn-action btn-confirm" onclick="status(${a.id},'confirmado')">Confirmar</button>` : ''}
-              ${a.status !== 'cancelado' && a.status !== 'concluido' ? `<button class="btn-action btn-cancel" onclick="status(${a.id},'cancelado')">Cancelar</button>` : ''}
-            </td>
-          </tr>`;
-        }).join('');
-      } catch (err) {
-        tbody.innerHTML = '<tr><td colspan="7" class="empty">Erro ao carregar. O servidor está rodando em http://localhost:3000?</td></tr>';
-        console.error(err);
+      if (dados.length === 0) {
+        container.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: #777;'>Nenhum agendamento encontrado.</p>";
+        return;
       }
+
+      dados.forEach(item => {
+        const dataObj = new Date(item.data);
+        const dataFormatada = dataObj.toLocaleDateString('pt-BR') + ' às ' + dataObj.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="card-header">
+            <h3>🐾 ${item.pet}</h3>
+            <span class="badge ${item.status}">${item.status}</span>
+          </div>
+          <div class="info-row"><strong>Tutor:</strong> ${item.tutor}</div>
+          <div class="info-row"><strong>Serviço:</strong> ${item.servico}</div>
+          <div class="info-row"><strong>Vet:</strong> ${item.vet}</div>
+          <div class="info-row"><strong>Data:</strong> ${dataFormatada}</div>
+        `;
+        container.appendChild(card);
+      });
     }
 
-    async function status(id, novo) {
-      if (!confirm('Alterar status para "' + novo + '"?')) return;
-      try {
-        const resp = await fetch('/api/agendamentos/' + id + '/status', {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ status: novo })
-        });
-        const r = await resp.json();
-        if (!resp.ok) throw new Error(r.error || 'Erro');
-        carregar();
-      } catch (e) {
-        alert(e.message);
-      }
+    function filtrarAgendamentos() {
+      const busca = document.getElementById("searchInput").value.toLowerCase();
+      const dataFiltro = document.getElementById("dateFilter").value;
+      const statusFiltro = document.getElementById("statusFilter").value;
+
+      const resultado = agendamentos.filter(item => {
+        const atendeBusca = item.pet.toLowerCase().includes(busca) || item.tutor.toLowerCase().includes(busca);
+        const atendeData = dataFiltro ? item.data.startsWith(dataFiltro) : true;
+        const atendeStatus = statusFiltro ? item.status === statusFiltro : true;
+
+        return atendeBusca && atendeData && atendeStatus;
+      });
+
+      renderizarLista(resultado);
     }
 
-    async function detalhes(id) {
-      try {
-        const resp = await fetch('/api/agendamentos/' + id);
-        const a = await resp.json();
-        alert(
-          `Agendamento #${a.id}\n\n` +
-          `Tutor: ${a.nome_tutor}\nEmail: ${a.email}\nTel: ${a.telefone}\n\n` +
-          `Pet: ${a.nome_pet} (${a.especie})\nRaça: ${a.raca || '-'}\nIdade: ${a.idade || '-'}\nPeso: ${a.peso || '-'}\n\n` +
-          `Serviço: ${a.servico}\nData: ${a.data} às ${a.horario}\nStatus: ${a.status}\n\n` +
-          `Obs: ${a.observacoes || '-'}`
-        );
-      } catch (e) {
-        alert('Erro ao carregar detalhes');
-      }
+    function toggleModal(show) {
+      const modal = document.getElementById("modalNovoAgendamento");
+      if (show) modal.classList.add("active");
+      else modal.classList.remove("active");
     }
 
-    document.getElementById('busca').addEventListener('keyup', e => { if (e.key === 'Enter') carregar(); });
-    carregar();
+    function salvarAgendamento(e) {
+      e.preventDefault();
+      
+      const novo = {
+        id: Date.now(),
+        pet: document.getElementById("petName").value,
+        tutor: document.getElementById("tutorName").value,
+        servico: document.getElementById("service").value,
+        vet: document.getElementById("vet.value") || document.getElementById("vet").value,
+        data: document.getElementById("datetime").value,
+        status: document.getElementById("status").value
+      };
+
+      agendamentos.push(novo);
+      renderizarLista(agendamentos);
+      document.getElementById("formAgendamento").reset();
+      toggleModal(false);
+    }
+
+    // Carregamento inicial
+    renderizarLista(agendamentos);
   </script>
 </body>
 </html>
