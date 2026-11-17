@@ -1,3 +1,5 @@
 node_modules/
-*.log
-.DS_Store
+data/vetcare.json
+data/*.tmp
+*.db
+package-lock.json
